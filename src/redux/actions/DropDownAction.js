@@ -1,6 +1,9 @@
 import { FETCH_FACILITY_SUCCESS, SAVE_FACILITY_SUCCESS,
-    CLOSE_FACILITY_POPUP, FACILITY_CHANGE_SUCCESS, LOADING, OFFLINE_SWITCH_FACILITY, CLEAR_INCART_FILTERS, CLEAR_UNIT_DELIVERY_FILTER } from './Types';
+    CLOSE_FACILITY_POPUP, FACILITY_CHANGE_SUCCESS, LOADING, OFFLINE_SWITCH_FACILITY, CLEAR_INCART_FILTERS, CLEAR_UNIT_DELIVERY_FILTER,
+	SWITCH_THEME
+} from './Types';
 import {get, post} from '../../services/httpService';
+import { DARK_MODE, LIGHT_MODE } from './Constants';
 
 export const switchFacility = (isOffline) => {
     return (dispatch) => {
@@ -43,4 +46,12 @@ export const handleClose = () => {
     return ((dispatch) => {
         dispatch({type:CLOSE_FACILITY_POPUP})
     })
+}
+
+export const switchTheme = () => {
+    return (dispatch) => {
+        var theme = sessionStorage.getItem('theme') === null || sessionStorage.getItem('theme') === DARK_MODE ? LIGHT_MODE : DARK_MODE
+        sessionStorage.setItem('theme', theme)
+        dispatch({ type: SWITCH_THEME, theme })
+    }
 }

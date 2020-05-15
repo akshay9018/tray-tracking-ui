@@ -11,13 +11,14 @@
     password: "",
     isAuthenticated:false,
     errorMessage:'',
-    defaultFacilityName : sessionStorage.getItem("facilityName")
+    defaultFacilityName : sessionStorage.getItem("facilityName"),
+    name: sessionStorage.getItem("name")
  };
 
  export default (state = initialState, action) => {
     switch (action.type) {
         case LOGIN_SUCCESS:
-            return {...state, isAuthenticated:true, defaultFacilityName: action.data.facilityName, errorMessage:undefined}
+            return {...state, isAuthenticated:true, defaultFacilityName: 'action.data.facilityName', name: 'action.data.name', errorMessage:undefined}
         case LOGIN_FAILED:
             return {...state, isAuthenticated:false, errorMessage:action.errorMessage }
         case LOGOUT:

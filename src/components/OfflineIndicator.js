@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import styles from "../style/styles";
-import "../style/index.css";
-import "../css/main.css";
 import { windowOffline, windowOnline } from "../redux/actions/OfflineIndicatorAction";
 import { connect } from "react-redux";
 class OfflineIndicator extends Component {

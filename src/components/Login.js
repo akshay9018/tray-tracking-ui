@@ -7,7 +7,7 @@ import "../style/index.css";
 import "../css/main.css";
 import { signIn, loginSuccess } from "../redux/actions/LoginAction";
 import { connect } from "react-redux";
-import { EMPTY_USERNAME_PASSWORD } from "../redux/actions/Constants";
+import { EMPTY_USERNAME_PASSWORD, LIGHT_MODE } from "../redux/actions/Constants";
 
 class Login extends Component {
   state = {};
@@ -24,6 +24,25 @@ class Login extends Component {
   }
 
   componentDidMount(){
+    //var request = indexedDB.open("TrayTrackingPostDB1");
+    //.setItem('abc', 'aaaa')
+    /*if ('localStorage' in window && window.localStorage !== null) {
+      if(localStorage.getItem('abc') === null){
+        alert('oh no')
+        localStorage.setItem('abc', LIGHT_MODE)
+      }
+    } else {
+      //not supported
+    }
+
+    if(localStorage.getItem('abc') === null){
+      alert('oh no')
+      localStorage.setItem('abc', LIGHT_MODE)
+    }*/
+//    localStorage.setItem('abc', 'aaaa')
+    if(sessionStorage.getItem('theme') === null){
+      sessionStorage.setItem('theme', LIGHT_MODE)
+    }
     if(!!sessionStorage.getItem('jwtToken')){
       this.props.loginSuccess(null,this.props.history);
     }

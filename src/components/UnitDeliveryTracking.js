@@ -46,15 +46,17 @@ class UnitDeliveryTracking extends Component {
     markUnitForTracking() {
         if (this.state.selectedUnit === -1)
             console.log("Please select a unit to deliver/ recover");
-        else {
-            this.props.markUnitForTracking(this.state.selectedUnit, this.state.currentMealId, this.props.selectedKitchenDelivered, true);
+        else if (this.state.currentMealId !== -1 && this.props.facilityMealNameArray) {
+			var mealNameArrayIndex = this.state.currentMealId === 1 ? 1 : this.state.currentMealId === 3 ? 2 : 3;
+            this.props.markUnitForTracking(this.state.selectedUnit, this.state.currentMealId, this.props.selectedKitchenDelivered, true, this.props.facilityMealNameArray[mealNameArrayIndex].name);
             this.setState({ selectedUnit: -1 })
         }
     }
 
     fetchUnits(kitchenId, mealNameId) {
-        if (mealNameId !== -1) {
-            this.props.fetchDeliveryUnits(kitchenId, mealNameId);
+        if (mealNameId !== -1 && this.props.facilityMealNameArray) {
+			var mealNameArrayIndex = mealNameId === 1 ? 1 : mealNameId === 3 ? 2 : 3;
+            this.props.fetchDeliveryUnits(kitchenId, mealNameId, this.props.facilityMealNameArray[mealNameArrayIndex].name);
             this.setState({ selectedUnit: -1 })
         }
     }
@@ -68,8 +70,11 @@ class UnitDeliveryTracking extends Component {
     }
 
     onUndo(unit) {
-        this.props.undoUnitTracking(unit, this.state.currentMealId, this.props.selectedKitchenDelivered, true)
-        this.setState({ selectedUnit: -1 })
+        if (this.state.currentMealId !== -1 && this.props.facilityMealNameArray) {
+			var mealNameArrayIndex = this.state.currentMealId === 1 ? 1 : this.state.currentMealId === 3 ? 2 : 3;
+            this.props.undoUnitTracking(unit, this.state.currentMealId, this.props.selectedKitchenDelivered, true, this.props.facilityMealNameArray[mealNameArrayIndex].name)
+            this.setState({ selectedUnit: -1 })
+        }
     }
 
     closeErrorPopup() {

@@ -27,6 +27,7 @@ export default (state = initialState, action) => {
       var unitsToDeliver = [];
       var recoveredUnits = [];
       action.units.forEach(unit => {
+        unit.mealName = action.mealName
         if (unit.umsId == null) {
           unitsToDeliver.push(unit)
         } else if (unit.eventType === 'Delivered') {

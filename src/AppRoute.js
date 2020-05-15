@@ -14,11 +14,13 @@ import UnitRecoveryTracking from './components/UnitRecoveryTracking';
 import CartSummary from './components/CartSummary';
 import OfflineIndicator from './components/OfflineIndicator';
 import HighRiskTrayCheck from './components/HighRiskTrayCheck';
+import SwitchTheme from './components/SwitchTheme';
 
 const AppRoute = () => (
   <Switch>
     <History>  
       <OfflineIndicator>
+        <SwitchTheme>
         <Route path='/login' component={Login} name ="login"/>  
         <PrivateRoute path="/trayEvents" component={TrayEvents} name="trayEvents"/>
         <PrivateRoute path="/inCart" component={InCart} name="inCart"/>
@@ -31,6 +33,7 @@ const AppRoute = () => (
         <PrivateRoute path="/unitRecoveryTracking" component={UnitRecoveryTracking} name="unitRecoveryTracking" />
         <PrivateRoute path="/highRiskTrayCheck" component={HighRiskTrayCheck} name="highRiskTrayCheck" />
         <Redirect to="/login" />
+        </SwitchTheme>
       </OfflineIndicator>
     </History>
   </Switch>

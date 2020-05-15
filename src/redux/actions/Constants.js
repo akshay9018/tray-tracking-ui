@@ -1,6 +1,7 @@
 //screen names
 export const DELIVERED = "DELIVERED";
 export const DEPARTED = "DEPARTED";
+export const INCART = "INCART";
 export const INCART_SCREEN_NAME = "Cart Loading"
 export const ADD_TRAYS_SCREEN_NAME = "Add Trays"
 export const DEPARTED_SCREEN_NAME = "Cart Departure"
@@ -43,9 +44,10 @@ export const ERROR_WHILE_UNDO_RECOVERING_UNIT_MESSAGE = "There is an error while
 export const MARK_RECOVERED = "Mark Recovered"
 export const TAP_MEAL_TO_SELECT_UNIT_RECOVERED ="Tap Meal to view units to mark as Recovered" 
 export const NO_MORE_UNITS_RECOVERED ="No more available units to mark recovered for selected criteria." 
-
+export const NO_MORE_TRANSITIONAL_TRAYS_TO_BE_DEPARTED = "No more available transitional trays to mark as departed"
 //id constants
 export const UNIT_ROOM_BED_SORT = "UNIT_ROOM_BED"
+export const INDEX_ID_SORT = "INDEX_ID_SORT"
 export const DELIVERY_DATE_TIME_SORT = "DELIVERY_DATE_TIME"
 export const TICKET_NUMBER_SORT = "TICKET_NUMBER"
 export const ZONE_NUMBER_SORT = "ZONE_NUMBER"
@@ -59,8 +61,11 @@ export const RECOVERED_STATUS = "RECOVERED"
 export const DEPARTED_STATUS = "DEPARTED"
 export const SEARCH = "search"
 export const NUMBER = "number"
+export const TRANSITIONAL = "TRANSITIONAL"
 
 //labels
+export const DARK_MODE_TEXT = "Dark Mode"
+export const LIGHT_MODE_TEXT = "Light Mode"
 export const UNIT_ROOM_BED_SORT_LABEL = "Sort By Unit/Room/Bed"
 export const TIME_SINCE_DELIVERED_SORT_LABEL = "Sort By Time since Delivered"
 export const DELIVERY_TIME_SORT_LABEL = "Sort By Delivery Time"
@@ -76,12 +81,18 @@ export const NOW = "NOW"
 export const RUSH = "RUSH"
 export const START_DELIVERING_TRAYS = "Start Delivering Trays"
 export const RETURN_TO_DEPARTED = "Return to Departed"
+export const RETURN_TO_DEPARTED_TRANSITIONAL = "Return to Depart More Transitional Trays"
 export const LOAD_NEW_TRAYS = "Load New Trays"
 export const BEDSIDE = "BEDSIDE"
 export const ROOM_SERVICE = "ROOM_SERVICE"
-
+export const TRANSITIONAL_TRAYS = "Transitional Trays"
+export const MARK_AS_DEPARTED = "Mark as Departed"
 //constant array
 export const INCART_SORT_BY_OPTION_ARRAY = [{ id: DELIVERY_DATE_TIME_SORT, name: DELIVERY_TIME_SORT_LABEL }, 
                                     { id: TICKET_NUMBER_SORT, name: TICKET_NUMBER_SORT_LABEL },
                                     { id: UNIT_ROOM_BED_SORT, name: UNIT_ROOM_BED_SORT_LABEL },
                                     { id: ZONE_NUMBER_SORT, name: ZONE_NUMBER_SORT_LABEL}]
+
+//css file name for themes
+export const DARK_MODE = "DarkMode"
+export const LIGHT_MODE = "LightMode"

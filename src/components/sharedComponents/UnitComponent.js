@@ -10,9 +10,13 @@ const UnitComponent = (props) => {
             <button onClick={() => props.onUndo(props.unit)} className="unit-list-undo undo-bttn">Undo	</button>
           </div> : null
       }
-      <div className="unit_tile_text">
-        <div className={props.isUndoEnable ? "undo-unit-name" : ""}>
-        <span className=".text-ellipsis-word-wrap" style={{ maxWidth: '90%' }}>{props.unit.name}</span>
+      <div className={props.isUndoEnable ? "unit_tile_text" : ""}>
+        <div className={props.isUndoEnable ? "undo-unit-name" : "unit_tile_text"}>
+        <div className="text-ellipsis" style={{ maxWidth: '90%' }}>
+          {props.unit.name}
+          <br/>
+          {props.unit.mealName}
+        </div>
         </div>
       </div>
 

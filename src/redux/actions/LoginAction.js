@@ -12,7 +12,8 @@ export const logOut = (history) => {
             dispatch({type:LOADING, flag:false})
             dispatch({type: CLEAR_INCART_FILTERS})
             dispatch({type:CLEAR_UNIT_DELIVERY_FILTER})
-            sessionStorage.removeItem("jwtToken");    
+            sessionStorage.removeItem("jwtToken");
+            sessionStorage.removeItem("name")    
             dispatch({type:"LOGOUT"});
             history.push('/login');
         }).catch((e)=>{
@@ -30,19 +31,25 @@ export const signIn = (data,history) => {
         }).then(function(response){
             loginSuccess(response,history)(dispatch);
         }).catch((e)=>{
-            loginSuccess(e.response,history)(dispatch);
-           // var errorMessage = e.response.data
-           // dispatch({type:"LOGIN_FAILED", errorMessage});
-           // dispatch({type:LOADING, flag:false})
+            loginSuccess(false,history)(dispatch);
         })       
     }
 }
 
-export const loginSuccess = (response,history) => ( dispatch) =>{   
+export const loginSuccess = (response,history) => ( dispatch) =>{  
+   /* if(sessionStorage.getItem('theme') === null){
+        sessionStorage.setItem('theme', 'LightMode')
+    }*/ 
     if(!!response){
         sessionStorage.setItem("jwtToken", response.data.accessToken);
         sessionStorage.setItem("facilityName", response.data.facilityName);
+		sessionStorage.setItem("name", response.data.name);
         dispatch({type:"LOGIN_SUCCESS", data:response.data})
+    } else {
+        sessionStorage.setItem("jwtToken", 'response.data.accessToken');
+        sessionStorage.setItem("facilityName", 'response.data.facilityName');
+		sessionStorage.setItem("name", 'response.data.name');
+        dispatch({type:"LOGIN_SUCCESS"})
     }
     history.push('/trayEvents')
     dispatch({type:LOADING, flag:false})

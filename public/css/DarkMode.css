@@ -1,0 +1,173 @@
+.heading-outer-style{float: left; margin-bottom: 20px}
+.heading-outer-style h6{ float: left; position: relative; top:13px;  margin: 0px; text-align: left; padding: 10px  20px 15px 20px; font-size: 22px; font-weight: 400;}
+body{
+	background: rgb(14,30,66);
+    background: linear-gradient(90deg, rgba(14,30,66,1) 0%, rgba(21,60,101,1) 50%, rgba(14,30,66,1) 100%);}
+
+/*	.heading-outer-style{float: left; }*/
+/* changes for home screen */
+
+.bgBlue{ background: rgb(14,30,66);
+	background: linear-gradient(90deg, rgba(14,30,66,1) 0%, rgba(21,60,101,1) 50%, rgba(14,30,66,1) 100%); height: calc(100vh - 100px); min-height: 100%; float: left;}
+
+header {
+	background: #1f7788;
+}
+
+.box-outer {
+	max-width:1024px;
+	width: 100%;
+}
+
+.box-outer-inner {	padding: 20px 10px;}
+
+.border-bottom{border-top: solid 1px #4a82c1;}
+
+.bg-highRisk,
+.bg-incart,
+.bg-deliver,
+.bg-depart,
+.bg-recover{
+	background-color: #1763ba;
+	width: 124px;
+	margin: 9px 10px;
+}
+
+.bg-incart{ margin-left: 0px !important;}
+.bg-recover{ margin-right: 0px !important;}
+.bg-highRisk { background-color: #e81f27;}
+.bg-incart {	background-color: #1763ba;}
+.bg-depart { background-color: #21a646;}
+.bg-deliver {	background-color: #f6682e;}
+.bg-recover {background-color: #ea3e82;}
+
+.bg-highRisk h3,
+.bg-neon h3,
+.bg-incart h3,
+.bg-deliver h3,
+.bg-depart h3,
+.bg-recover h3 {
+	font-size: 15px;
+	font-family: "open_sansregular";
+}
+/* changes for home screen end*/
+
+/* changes for incart screen */
+.bg-incart-header{	background-color: #1763ba;}
+
+.incart-panel-height{
+	height: calc(100vh - 240px) !important; 
+}
+
+.search-custom-bar input, .search-custom-bar-add-trays input, .search-custom-bar-depart input { 
+	font-size: 13px;
+	color: #fff;
+}
+
+.search-custom-bar-depart input::placeholder, .search-custom-bar input::placeholder, .search-custom-bar-add-trays input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+	color: #fff;
+}
+
+.search-custom-bar fieldset, .search-custom-bar-add-trays fieldset, .search-custom-bar-depart fieldset {
+	background-color: #0e2a5e;
+	color: #fff;
+}
+
+.search-custom-bar fieldset{ border: solid 1px #0e519e !important; border-radius: 0px;}
+
+.search-icon{
+	color: #fff;
+}
+
+.width-auto {
+	width: calc(100% - 382px);
+    border: solid 1px #113f7f;
+    margin: 20px 10px;
+}
+
+.header-sm{ float: left; width: 100%;  background-color: rgba(555, 555, 555, 0.1); }
+.header-sm h6{ float: left; color: #fff; width: 100%;position: relative;   margin: 0px; text-align: left; padding: 10px  20px 15px 20px; font-size: 22px; font-weight: 400;}
+
+.cart-details{	
+	margin: 0px 0px 0px 0px;
+}
+
+.zone-number{    
+	font-weight: bold;
+    color: #fff;
+    border-right: 1px solid #1763ba;
+	}
+
+.plus-icon{ color:#fff;}
+.cart-list{border: solid 1px #1763ba;}
+.grab-cart{ color: #fff;}
+.cart-zone-box.active .cart-list{  background-color: #1763ba;}
+.total-item{background:#1433a3}
+.width-350 {
+	width: 318px;
+	border: solid 1px #113f7f;
+    margin: 20px;
+}
+.header-dark, .ticket-footer-dark{ background-color: rgba(0,0,0,0.30)}
+
+.order-detail-list.active {	background-color: #1763ba}
+.order-detail-list.active .header-dark{	background-color: rgba(0, 0, 0, 0.30);}
+.order-detail-list.active .ticket-footer-dark{	background-color: rgba(0, 0, 0, 0.30);}
+
+.select-menu-incart {
+
+	border: solid 1px #0e519e;
+	background-color: #0e2a5e;
+	color: #fff;
+	height: 34px;
+	font-size: 13px;
+
+}
+/* changes for incart screen end*/
+
+@media only screen and (max-width: 1024px) {
+	/* changes for home screen */
+	header {
+		background: #1f7788;
+	}
+	.bg-highRisk, .bg-incart, .bg-deliver, .bg-depart, .bg-recover {
+		color: #fff;
+		text-align: center;
+		padding: 30px 23px;
+		height: 106px;
+		width: 138px;
+		margin: 9px 10px;
+		display: inline-block;
+		vertical-align: top;
+		border-radius: 15px;
+	}
+	/* changes for incart screen end*/
+
+	/* changes for incart screen */
+
+	/* changes for incart screen end*/
+}
+@media only screen and (max-width: 1023px) {
+/* changes for home screen */
+	.box-outer {
+    max-width: 950px;
+    margin: 0px auto;
+    padding: 30px 0 0 0;
+    text-align: center;
+    width: 100%;
+	}
+
+.bg-highRisk, .bg-incart, .bg-deliver, .bg-depart, .bg-recover {
+    width: 124px;
+    margin: 9px 10px;
+	}
+
+/* changes for home screen end*/
+}
+@media only screen and (max-width: 768px) {
+	/* changes for home screen */
+	header {
+	background: #007c94;
+	}
+	/* changes for home screen end*/
+}

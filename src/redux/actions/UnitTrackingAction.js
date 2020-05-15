@@ -27,12 +27,12 @@ export const fetchKitchensWithUnitTrackingEnabled = () => {
     }
 }
 
-export const fetchDeliveryUnits = (kitchenId, mealNameId) => ((dispatch) => {
+export const fetchDeliveryUnits = (kitchenId, mealNameId, mealName) => ((dispatch) => {
     dispatch({ type: LOADING_SCREEN, loadingUnitsToDeliver: true })
     return get({
         url: '/traytracking/fetchDeliveryUnits/?mealNameId=' + mealNameId + '&kitchenId=' + kitchenId,
     }).then((res) => {
-        dispatch({ type: FETCH_DELIVERY_OR_RECOVERY_UNITS, units: res.data, });
+        dispatch({ type: FETCH_DELIVERY_OR_RECOVERY_UNITS, units: res.data, mealName});
         dispatch({ type: LOADING_SCREEN, loadingUnitsToDeliver: false })
     }).catch((e) => {
         console.log('Error while fetching units to mark deliver.')
@@ -40,7 +40,7 @@ export const fetchDeliveryUnits = (kitchenId, mealNameId) => ((dispatch) => {
     })
 })
 
-export const markUnitForTracking = (selectedUnit, selectedMealNameId, selectedKitchen, isDelivery) => ((dispatch) => {
+export const markUnitForTracking = (selectedUnit, selectedMealNameId, selectedKitchen, isDelivery, mealName) => ((dispatch) => {
     dispatch({ type: LOADING, flag: true })
     return post({
         url: '/traytracking/markUnit',
@@ -52,7 +52,7 @@ export const markUnitForTracking = (selectedUnit, selectedMealNameId, selectedKi
         }
     }).then((res) => {
         dispatch({ type: LOADING, flag: false })
-        dispatch({ type: FETCH_DELIVERY_OR_RECOVERY_UNITS, units: res.data, });
+        dispatch({ type: FETCH_DELIVERY_OR_RECOVERY_UNITS, units: res.data, mealName });
     }).catch((err) => {
         dispatch({ type: UPDATE_UNIT_DELIVERED_FAIL });
         dispatch({ type: LOADING, flag: false })
@@ -60,7 +60,7 @@ export const markUnitForTracking = (selectedUnit, selectedMealNameId, selectedKi
     })
 })
 
-export const undoUnitTracking = (selectedUnit, selectedMealNameId, selectedKitchen, isDelivery) => ((dispatch) => {
+export const undoUnitTracking = (selectedUnit, selectedMealNameId, selectedKitchen, isDelivery, mealName) => ((dispatch) => {
     dispatch({ type: LOADING, flag: true })
     return post({
         url: '/traytracking/undoMarkedUnit',
@@ -72,7 +72,7 @@ export const undoUnitTracking = (selectedUnit, selectedMealNameId, selectedKitch
         }
     }).then((res) => {
         dispatch({ type: LOADING, flag: false })
-        dispatch({ type: FETCH_DELIVERY_OR_RECOVERY_UNITS, units: res.data, });
+        dispatch({ type: FETCH_DELIVERY_OR_RECOVERY_UNITS, units: res.data, mealName});
     }).catch((err) => {
         dispatch({ type: UPDATE_UNIT_UNDO_DELIVERED_FAIL });
         dispatch({ type: LOADING, flag: false })
@@ -80,12 +80,12 @@ export const undoUnitTracking = (selectedUnit, selectedMealNameId, selectedKitch
     })
 })
 
-export const fetchRecoveryUnits = (kitchenId, mealNameId) => ((dispatch) => {
+export const fetchRecoveryUnits = (kitchenId, mealNameId, mealName) => ((dispatch) => {
     dispatch({ type: LOADING_SCREEN, loadingRecoveredUnits: true })
     return get({
         url: '/traytracking/fetchRecoveryUnits/?mealNameId=' + mealNameId + '&kitchenId=' + kitchenId,
     }).then((res) => {
-        dispatch({ type: FETCH_DELIVERY_OR_RECOVERY_UNITS, units: res.data, });
+        dispatch({ type: FETCH_DELIVERY_OR_RECOVERY_UNITS, units: res.data, mealName });
         dispatch({ type: LOADING_SCREEN, loadingRecoveredUnits: false })
     }).catch((e) => {
         console.log('Error while fetching units to mark recover.')

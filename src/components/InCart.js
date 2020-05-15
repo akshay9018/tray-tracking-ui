@@ -174,7 +174,7 @@ class InCart extends Component {
     }
         {this.state.showRefreshLoading && <div className="loader" style={{ background: 'transparent' }} />}
         {this.state.enableLoader && this.props.loadingIncart && <div className="loader"><img alt="Loading. Please wait..." className="loading-gif" src={require("../images/loading.gif")} /></div>}
-        {this.state.isInCart && <AppHeader props={this.props} title={this.props.screenName} />}
+        {this.state.isInCart && <AppHeader props={this.props} headerClass="bg-incart-header" title={this.props.screenName} />}
         <div style={{ marginLeft: '-10px' }}>
         <div style={{float:'left', position:'relative'}}>
           <FiltersComponent menuClass="select-menu-incart" filters={filters} onChange={(e) => this.onChange(e)} />

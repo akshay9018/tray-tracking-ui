@@ -1,12 +1,14 @@
-import { UNIT_ROOM_BED_SORT , DELIVERY_DATE_TIME_SORT, TICKET_NUMBER_SORT } from "../redux/actions/Constants";
+import { UNIT_ROOM_BED_SORT , DELIVERY_DATE_TIME_SORT, TICKET_NUMBER_SORT, INDEX_ID_SORT } from "../redux/actions/Constants";
 export function sortOn(sortByParam, isRecovered, inCart) {
     if(inCart){
         return sortIncartOrders(sortByParam);
-    } else if (isRecovered) {
-        return sortByTimeSinceDelivery()
     } else if (sortByParam === UNIT_ROOM_BED_SORT) {
         return sortByURB()
-    }  else if (sortByParam!== UNIT_ROOM_BED_SORT && !isRecovered && !inCart){
+    } else if (isRecovered) {
+        return sortByTimeSinceDelivery()
+    } else if(sortByParam === INDEX_ID_SORT){
+        return sortByIndexId()
+    } else if (sortByParam!== UNIT_ROOM_BED_SORT && !isRecovered && !inCart){
         return sortByDeliveryTime()
     }
 }
@@ -61,6 +63,12 @@ function sortByZone(isInCart) {
         if (a.zone === b.zone)
             return sortByDeliveryTime(a, b);
         return parseInt(a.zone) - parseInt(b.zone)
+    }
+}
+
+function sortByIndexId() {
+    return function (a, b) {
+        return parseInt(a.indexId) - parseInt(b.indexId)
     }
 }
 

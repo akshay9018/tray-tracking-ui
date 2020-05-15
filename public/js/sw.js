@@ -1,6 +1,7 @@
+var ts = (new Date()).getTime()+(new Date()).getTimezoneOffset()
 var CACHE = {
 	name: 'MyDelivery',
-	version: '_V1.1.0'
+	version: '_V1_MD-411'
 };
 var assets = '/traytracking/resources/asset-manifest.json';
 var undefinedResponse = 'dW5kZWZpbmVk';
@@ -11,7 +12,8 @@ function precacheAssets() {
 		.then((response) => {
 			let promise = Promise.resolve(response.text()).then((text) => {
 				jsonResources = JSON.parse(text)
-				var ary = ['/traytracking/', '/traytracking/resources/favicon.ico', '/traytracking/resources/logoHome.png', '/traytracking/resources/logo192.png', '/traytracking/resources/logo512.png']
+				var ary = ['/traytracking/', '/traytracking/resources/favicon.ico', '/traytracking/resources/logoHome.png', '/traytracking/resources/logo192.png', '/traytracking/resources/logo512.png',
+				'/traytracking/resources/css/LightMode.css', '/traytracking/resources/css/DarkMode.css']
 				Object.keys(jsonResources).forEach(function (key) {
 					if (!jsonResources[key].endsWith('.map'))
 						ary.push(jsonResources[key]);
@@ -66,7 +68,7 @@ self.addEventListener('fetch', function (event) {
 			return
 		}
 		if (navigator.onLine) {
-			if (event.request.url.includes('/traytracking/fetchDeliveredMealOrders') && !event.request.url.includes('/traytracking/fetchDeliveredMealOrders/?unitId=-1')) {
+			if (event.request.url.includes('/traytracking/fetchDeliveredMealOrders') && !event.request.url.includes('/traytracking/fetchDeliveredMealOrders/?serviceStyle=-1&unitId=-1')) {
 				//update cache for unit id : -1
 				resp = updateCacheRecoveredForAllUnits(event.request)
 				event.respondWith(resp)
@@ -142,7 +144,7 @@ async function updateStatusToDelivered(authHeader, mealOrderId, eventTime) {
 		}
 		caches.open(CACHE.name + CACHE.version).then(cache => cache.put(myRequest, new Response(btoa(JSON.stringify(decryptedResp)))));
 	}
-	var myRequest2 = new Request('/traytracking/fetchDeliveredMealOrders/?unitId=-1');
+	var myRequest2 = new Request('/traytracking/fetchDeliveredMealOrders/?serviceStyle=-1&unitId=-1');
 	myRequest2.mode = 'cors'
 	myRequest2.headers = { 'Authorization': authHeader }
 	var decryptedResp2;
@@ -193,7 +195,7 @@ async function updateStatusToDeparted(authHeader, mealOrderId) {
 	}
 
 	caches.open(CACHE.name + CACHE.version).then(cache => cache.put(myRequest, new Response(btoa(JSON.stringify(decryptedResp)))));
-	var myRequest2 = new Request('/traytracking/fetchDeliveredMealOrders/?unitId=-1');
+	var myRequest2 = new Request('/traytracking/fetchDeliveredMealOrders/?serviceStyle=-1&unitId=-1');
 	myRequest2.mode = 'cors'
 	myRequest2.headers = { 'Authorization': authHeader }
 	var resp2;
@@ -221,7 +223,7 @@ async function updateStatusToDeparted(authHeader, mealOrderId) {
 async function updateCacheRecoveredForAllUnits(request) {
 	var responseForSelectedUnit = await cacheRequest(request);
 	var response = await fetchResponseFromCache(request, true)
-	var myRequest = new Request('/traytracking/fetchDeliveredMealOrders/?unitId=-1');
+	var myRequest = new Request('/traytracking/fetchDeliveredMealOrders/?serviceStyle=-1&unitId=-1');
 	myRequest.mode = 'cors'
 	myRequest.headers = request.headers
 	var resp = await fetchResponseFromCache(myRequest, true)
@@ -268,7 +270,7 @@ async function updateCacheRecoveredForAllUnits(request) {
 }
 async function updateStatusFromRecovered(authHeader, mealOrderId, currentStatus) {
 	var id = JSON.parse(mealOrderId).id
-	var myRequest = new Request('/traytracking/fetchDeliveredMealOrders/?unitId=-1');
+	var myRequest = new Request('/traytracking/fetchDeliveredMealOrders/?serviceStyle=-1&unitId=-1');
 	myRequest.mode = 'cors'
 	myRequest.headers = { 'Authorization': authHeader }
 	var resp = await fetchResponseFromCache(myRequest, true)
@@ -498,6 +500,7 @@ self.addEventListener('activate', (event) => {
 		caches.keys().then((cacheNames) => {
 			return Promise.all(
 				cacheNames.map((cache) => {
+					console.log(cache)
 					if (cache !== CACHE.name + CACHE.version) {
 						return caches.delete(cache);
 					}

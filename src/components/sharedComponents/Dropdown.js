@@ -8,6 +8,9 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import DomainIcon from '@material-ui/icons/Domain';
 import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import SwitchThemeIconLight from '@material-ui/icons/Brightness4';
+import SwitchThemeIconDark from '@material-ui/icons/Brightness4Outlined';
+import { LIGHT_MODE_TEXT } from '../../redux/actions/Constants';
 
 const StyledMenu = withStyles({
   paper: {
@@ -57,6 +60,13 @@ export default function CustomizedMenus(props) {
     props.switchFacility();
   }
 
+  var theme = "Change to "+props.themeName 
+
+  function switchTheme() {
+    setAnchorEl(null);
+    props.switchTheme();
+  }
+    
   return (
     <div className="dropdown"> 
   <IconButton className="dropdown_Icon"
@@ -69,9 +79,10 @@ export default function CustomizedMenus(props) {
       </IconButton>
 
       <div className="selected-facility-name">
-        {props.selectedFacilityName}
-        </div>
-      
+        {props.selectedFacilityName}<br />
+        <div className='username'>{props.name}</div>
+      </div>
+
       <StyledMenu
        className="MenuStyle"
         id="customized-menu"
@@ -92,6 +103,13 @@ export default function CustomizedMenus(props) {
             <DomainIcon />
           </ListItemIcon>
           <ListItemText primary="Change Facility"/>   
+        </StyledMenuItem>
+        <StyledMenuItem onClick={switchTheme} className="menuItem">
+          <ListItemIcon>
+            {props.themeName === LIGHT_MODE_TEXT ?
+            <SwitchThemeIconLight /> : <SwitchThemeIconDark /> }
+          </ListItemIcon>
+          <ListItemText primary={theme}/>   
         </StyledMenuItem>
         <StyledMenuItem onClick={props.logOut} className="menuItem">
         <ListItemIcon>

@@ -46,43 +46,43 @@ class TrayEvents extends Component {
 
   render() {
     return (
-      <div className="container bgBlue">
-        <AppHeader title='Tray Event Capture' showHomeLogo={false} props={this.props}/>
+      <div className="container bgBlue main-page-header">
+        <AppHeader title='MyDelivery' showHomeLogo={false} props={this.props}/>
       <div className="box-outer">
         <div className="box-outer-inner">
 
-          <div onClick={this.openInCart} className="bg-blue">
+          <div onClick={this.openInCart} className="bg-incart">
 
             <img style={{height:'65px'}} alt="In Cart" src={require("../images/in-cart-icon.png")} />
             <h3> {INCART_SCREEN_NAME} </h3>
 
           </div>
-          <div className="bg-red" onClick={this.openReadyToHighRiskTrayCheck}>
+          <div className="bg-highRisk" onClick={this.openReadyToHighRiskTrayCheck}>
             <img style={{height:'65px'}} alt="High Risk" src={require("../images/high-risk-icon.png")} />
             <h3> {HIGH_RISK_TRAY_CHECK_SCREEN_NAME} </h3>
           </div>
-          <div className="bg-green" onClick={this.openReadyToDepart}>
+          <div className="bg-depart" onClick={this.openReadyToDepart}>
             <img style={{height:'65px'}} alt="Departed" src={require("../images/departed-icon.png")} />
             <h3> {DEPARTED_SCREEN_NAME} </h3>
           </div>
-          <div className="bg-org" onClick={this.openReadyToDeliver}>
+          <div className="bg-deliver" onClick={this.openReadyToDeliver}>
             <img style={{height:'65px'}} alt="Delivered" src={require("../images/delivered-icon.png")} />
             <h3> {DELIVERED_SCREEN_NAME} </h3>
           </div>
-          <div className="bg-pink"  onClick={this.openRecovered}>
+          <div className="bg-recover"  onClick={this.openRecovered}>
             <img style={{height:'65px'}} alt="Recovered" src={require("../images/recovered-icon.png")} />
             <h3> {RECOVERED_SCREEN_NAME} </h3>
           </div>
         </div>
 
         <div className="box-outer-inner border-bottom text-right">
-          <div onClick={this.openUnitDeliveryTracking} className="bg-org">
+          <div onClick={this.openUnitDeliveryTracking} className="bg-deliver">
 
             <img style={{height:'65px'}} alt={UNIT_DELIVERY_TRACKING} src={require("../images/unit-delivery-icon.png")} />
             <h3> {UNIT_DELIVERY_TRACKING} </h3>
 
           </div>
-          <div onClick={this.openUnitRecoveryTracking} className="bg-pink">
+          <div onClick={this.openUnitRecoveryTracking} className="bg-recover">
 
             <img style={{height:'65px'}} alt={UNIT_RECOVERY_TRACKING} src={require("../images/unit-recovery-icon.png")} />
             <h3> {UNIT_RECOVERY_TRACKING} </h3>

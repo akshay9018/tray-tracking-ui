@@ -6,13 +6,15 @@ import {
     SORT_AND_FILTER_TRAYS,
     REMOVE_TRAY_FROM_DEPART_CART,
     MARK_CART_DEPARTED_SUCCESS,
+    MARK_TRAY_DEPARTED_SUCCESS,
+    UPDATE_UNDO_DEPARTED_SUCCESS,
     HIDE_CONFIRMATION,
     REMOVE_TRAY_FROM_HIGH_RISK_CHECK_CART,
     FILTER_DEPART_CARTS,
     FETCH_SERVICE_STYLES_AND_KITCHENS,
-    FILTER_KITCHENS_FOR_SELECTED_SERVICE_STYLE
+    FILTER_KITCHENS_FOR_SELECTED_SERVICE_STYLE,
 } from '../actions/Types';
-import { DELIVERED, DEPARTED, DELIVERY_DATE_TIME_SORT, DELIVERED_STATUS, RECOVERED_STATUS } from '../actions/Constants';
+import { DELIVERED, DEPARTED, DELIVERY_DATE_TIME_SORT, DELIVERED_STATUS, RECOVERED_STATUS, INCART, INDEX_ID_SORT } from '../actions/Constants';
 import { sortOn } from '../../utils/sort'
 
 export const initialState = {
@@ -23,10 +25,13 @@ export const initialState = {
     deliveredTrays: [],
     cartMarkedDepartedSuccessMessage: false,
     errorWhileDepartingMessage: false,
+    trayMarkedDepartedSuccessMessage: false,
+    errorWhileDepartingTrayMessage: false,
     allDepartedCartList: [],
     kitchens: [],
     filteredKitchens: [],
     serviceStyles: [],
+    departedTrays:[],
 }
 
 export default (state = initialState, action) => {
@@ -62,6 +67,7 @@ export default (state = initialState, action) => {
                 ...state,
                 allDepartedCartList,
                 carts: allDepartedCartList,
+                departedTrays: [],
             }
         case FILTER_DEPART_CARTS:
             allDepartedCartList = [...state.allDepartedCartList]
@@ -110,11 +116,45 @@ export default (state = initialState, action) => {
                 cartMarkedDepartedSuccessMessage: action.status,
                 errorWhileDepartingMessage: !action.status,
             }
+        case MARK_TRAY_DEPARTED_SUCCESS:
+            var departedTrays = state.departedTrays;
+            selectedCart = Object.assign({}, state.selectedCart);
+            if(action.status){
+                var mealOrder = action.mealOrder
+                mealOrder.isUndoEnable = true
+                mealOrder.trackingStatus = DEPARTED
+                departedTrays.push(mealOrder)
+                var mealOrders = selectedCart.mealOrders.filter(item => item.id !== action.mealOrder.id)
+                departedTrays = departedTrays.sort(sortOn(INDEX_ID_SORT))
+                selectedCart.mealOrders = mealOrders
+            }
+            return {
+                ...state,
+                trayMarkedDepartedSuccessMessage: action.status,
+                errorWhileDepartingTrayMessage: !action.status,
+                departedTrays,
+                selectedCart,
+            }
+        case UPDATE_UNDO_DEPARTED_SUCCESS:
+            selectedCart = Object.assign({}, state.selectedCart);
+            var trayUndoDeparted = action.mealOrder
+            trayUndoDeparted.trackingStatus = INCART
+            trayUndoDeparted.isUndoEnable = false;
+            selectedCart.mealOrders.push(trayUndoDeparted)
+            selectedCart.mealOrders = selectedCart.mealOrders.sort(sortOn(INDEX_ID_SORT))
+            departedTrays = state.departedTrays.filter(item => item.id !== action.mealOrder.id)
+            return{
+                ...state,
+                selectedCart,
+                departedTrays,
+            }
         case HIDE_CONFIRMATION:
             return {
                 ...state,
                 cartMarkedDepartedSuccessMessage: false,
                 errorWhileDepartingMessage: false,
+                trayMarkedDepartedSuccessMessage: false,
+                errorWhileDepartingTrayMessage:false
             }
         case UPDATE_DELIVERED_SUCCESS:
             var currentSelectedCart = Object.assign({}, action.selectedCart);

@@ -4,7 +4,7 @@ import Dropdown from './Dropdown';
 import { logOut } from '../../redux/actions/LoginAction';
 import { goToTrayEvents } from '../../redux/actions/TrayEventsAction';
 import { DEPARTED, DELIVERED, CART_SUMMARY, ERROR_WHILE_OFFLINE_SWITCHING_FACILITY, ERROR_WHILE_OFFLINE_SWITCHING_FACILITY_TITLE, OFFLINE_MODE_ON_MESSAGE, HIGH_RISK_TRAY_CHECK } from '../../redux/actions/Constants';
-import { switchFacility, saveDafaultFacility, handleClose } from '../../redux/actions/DropDownAction';
+import { switchFacility, saveDafaultFacility, switchTheme, handleClose } from '../../redux/actions/DropDownAction';
 import FacilityPopup from '../FacilityPopup';
 import CustomizedDialog from '../sharedComponents/CustomizedDialogs';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -30,6 +30,10 @@ class AppHeader extends Component {
 
   switchFacility = () => {
     this.props.switchFacility(this.props.isOffline);
+  }
+
+  switchTheme = () => {
+    this.props.switchTheme(this.props.switchTheme);
   }
 
   saveDafaultFacility = (facility) => {
@@ -62,7 +66,7 @@ class AppHeader extends Component {
 
       
 
-    <header>
+    <header className={this.props.headerClass}>
 
       {this.props.showBack &&
         <button onClick={this.goToPreviousScreen}
@@ -85,7 +89,8 @@ class AppHeader extends Component {
       {this.props.isOffline && <div style={{marginTop: '-27px', background: '#d2cece', paddingLeft: '82px', color: '#676565'}}>
         <span> {OFFLINE_MODE_ON_MESSAGE} </span>
       </div>}
-      <Dropdown logOut={this.handleLogOut} switchFacility ={this.switchFacility} selectedFacilityName={this.props.selectedFacilityName}/>
+      <Dropdown logOut={this.handleLogOut} switchFacility ={this.switchFacility} name={this.props.name} selectedFacilityName={this.props.selectedFacilityName}
+        switchTheme = {this.switchTheme} theme = {this.props.theme} themeName = {this.props.themeName}/>
       <CustomizedDialog open={this.props.showFacilityPopup} handleClose={this.handleClose} 
       customClassName="change-facility"
         dialogContent={<ul className="facility-popup-ul">
@@ -111,8 +116,11 @@ const mapStatetoProps = (state) => {
     showOfflineFacilityPopup : state.dropDown.showOfflineFacilityPopup,
     selectedFacilityId: state.dropDown.selectedFacilityId,
     selectedFacilityName: state.login.defaultFacilityName,
+    name: state.login.name,
     loading: state.loader.loading,
     isOffline: state.offlineIndicator.isOffline,
+    theme: state.dropDown.theme,
+    themeName: state.dropDown.themeName,
   }
 }
 
@@ -121,6 +129,7 @@ const mapDispatchToProps ={
     goToTrayEvents,
     saveDafaultFacility,
     switchFacility,
+    switchTheme,
     handleClose
 }
 

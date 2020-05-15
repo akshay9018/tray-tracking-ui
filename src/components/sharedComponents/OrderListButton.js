@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { removeTrayFromCart, fetchAllUnitsForSelectedKitchen, unselectMealOrder, selectMealOrder } from '../../redux/actions/InCartAction';
 import { markCartDeparted, sortAndFilterTrays, openDepartedCartSummary, hideConfirmationPopup } from '../../redux/actions/DepartureAction';
 import { markTrayDelivered, undoDeliveredTray } from '../../redux/actions/DeliveredAction';
-import { fetchTraysToRecover, recoverTray, undoRecoveredTray} from '../../redux/actions/RecoveredAction';
+import { fetchTraysToRecover, recoverTray, undoRecoveredTray, fetchAllServiceStylesAndUnits, filterUnitBySelectedServiceStyle,
+	filterTraysOnRecovered} from '../../redux/actions/RecoveredAction';
 import { openReadyToDepart } from '../../redux/actions/TrayEventsAction'
 import CustomizedDialogs from './CustomizedDialogs';
 import Button from '@material-ui/core/Button';
@@ -17,11 +18,13 @@ import { DEPARTED_SCREEN_NAME, DELIVERED_SCREEN_NAME, RECOVERED_SCREEN_NAME,
     NEXT_ACTION_CONFIRMATION, EMPTY_CART_DELETE_MESSAGE, ALL_TRAYS_DELIVERED, 
     NO_MORE_TRAYS, ADD_TRAYS_SCREEN_NAME, TIME_SINCE_DELIVERED_SORT_LABEL, 
     DELIVERY_TIME_SORT_LABEL, START_DELIVERING_TRAYS, RETURN_TO_DEPARTED, 
-    ERROR_WHILE_DEPARTING_CART, ERROR_WHILE_DEPARTING_CART_MESSAGE, HIGH_RISK_TRAY_CHECK_SCREEN_NAME} from "../../redux/actions/Constants";
+    ERROR_WHILE_DEPARTING_CART, ERROR_WHILE_DEPARTING_CART_MESSAGE, HIGH_RISK_TRAY_CHECK_SCREEN_NAME,
+    SHOW_ALL_SERVICE_STYLES, SERVICE_STYLE, SEARCH, SEARCH_LABEL, TRANSITIONAL, MARK_AS_DEPARTED} from "../../redux/actions/Constants";
 import {MARK_CART_CHECKED, ERROR_WHILE_HIGH_RISK_CHECK_TITLE, ERROR_WHILE_HIGH_RISK_CHECK_MESSAGE, 
     MARK_CART_DEPARTED } from '../../utils/ConstantsWithStyle';
 import { Grid } from "@material-ui/core";
 import {markCartChecked, hideErrorPopup} from '../../redux/actions/HighRiskTrayCheckAction';
+import CustomSearchBar from "./CustomSearchBar";
 class OrderListButton extends Component {
     constructor(props) {
         super(props);
@@ -37,6 +40,9 @@ class OrderListButton extends Component {
             isDelivered: this.props.screenName === DELIVERED_SCREEN_NAME,
             isRecovered: this.props.screenName === RECOVERED_SCREEN_NAME,
             isHighRiskTrayCheck: this.props.screenName === HIGH_RISK_TRAY_CHECK_SCREEN_NAME,
+            selectedServiceStyle: '-1',
+            search: '',
+            showClear: false
         }
         this.removeTray = this.removeTray.bind(this);
         this.handleClose = this.handleClose.bind(this);
@@ -53,6 +59,7 @@ class OrderListButton extends Component {
         this.goToDepartedScreen = this.goToDepartedScreen.bind(this)
         this.markCartChecked = this.markCartChecked.bind(this);
         this.onAcceptChecked = this.onAcceptChecked.bind(this);
+        this.clearSearch = this.clearSearch.bind(this);
     }
     handleClose() {
         this.props.closeDepartedSummary()
@@ -60,8 +67,8 @@ class OrderListButton extends Component {
 
     componentWillMount() {
         if (this.props.isRecovered) {
-            this.props.fetchAllUnitsForSelectedKitchen(-1, -1)
-            this.props.fetchTraysToRecover(-1, '', this.props.parentProps.isOffline)
+            this.props.fetchAllServiceStylesAndUnits();
+            this.props.fetchTraysToRecover(this.state.selectedServiceStyle, this.state.selectedUnit, this.state.sortBy, this.props.parentProps.isOffline, this.state.search)
         }
     }
     returnSelectedOrder(mealOrder, isUndoEnable) {
@@ -90,6 +97,16 @@ class OrderListButton extends Component {
             console.log("Please select a tray to remove");
         else {
             this.props.removeTrayFromCart(this.props.selectedCart.id, this.props.selectedCart.zone,
+                this.state.selectedMealOrder.id, this.props.parentProps.history, this.state.isDeparted, this.state.isHighRiskTrayCheck);
+            this.setState({ selectedMealOrder: -1 })
+        }
+    }
+
+    markAsDeparted() {
+        if (this.state.selectedMealOrder === -1)
+            console.log("Please select a tray to depart");
+        else {
+            this.props.markAsDeparted(this.props.selectedCart.id, this.props.selectedCart.zone,
                 this.state.selectedMealOrder.id, this.props.parentProps.history, this.state.isDeparted, this.state.isHighRiskTrayCheck);
             this.setState({ selectedMealOrder: -1 })
         }
@@ -140,42 +157,63 @@ class OrderListButton extends Component {
     onAddTrays() {
         this.setState({ selectedMealOrder: -1, openAddTrayPopup: !this.state.openAddTrayPopup })
     }
-
+    
+    clearSearch(){
+        	this.setState({showClear: false, search: ''});
+        	this.props.filterTraysOnRecovered('');
+        }
+    
     onChangeFilters(event) {
-        if (event.target.name === UNIT) {
+    	if(this.props.isRecovered){
+    		if (event.target.name === SERVICE_STYLE) {
+        	     this.props.filterUnitBySelectedServiceStyle(event.target.value);
+        	     this.props.fetchTraysToRecover(event.target.value, -1, this.state.sortBy, this.props.parentProps.isOffline, this.state.search);
+        	     this.setState({selectedServiceStyle: event.target.value, selectedUnit: -1}) 
+        	    }
+    		else if(event.target.name === UNIT) {
+                var selectedUnit = parseInt(event.target.value)
+                this.setState({ selectedUnit })
+                this.props.fetchTraysToRecover(this.state.selectedServiceStyle, selectedUnit, this.state.sortBy, this.props.parentProps.isOffline, this.state.search);
+    			}
+    		 else if (event.target.name === SEARCH){
+    		      this.setState({ [event.target.name] : event.target.value, showClear: event.target.value !== ''});
+    		      this.props.filterTraysOnRecovered(event.target.value);
+    		    }
+    		 else if (event.target.name === 'sort') {
+    	            if(event.target.value!=="-1" ){
+    	            this.setState({ sortBy: event.target.value, selectedMealOrder: -1 })
+    	            this.props.fetchTraysToRecover(this.state.selectedServiceStyle, this.state.selectedUnit, event.target.value, this.props.parentProps.isOffline, this.state.search);
+    	        }
+    		 }
+    	}
+    	else {
+    		if (event.target.name === UNIT) {
             var selectedUnit = parseInt(event.target.value)
             this.setState({ selectedUnit })
-            if (this.props.isRecovered){
-                this.props.fetchTraysToRecover(selectedUnit, this.state.sortBy, this.props.parentProps.isOffline);
-            }
-            else{
-                this.setState({selectedMealOrder: -1})
-                this.props.sortAndFilterTrays(this.props.selectedCart, selectedUnit, this.state.sortBy)
-            }
+            this.setState({selectedMealOrder: -1})
+            this.props.sortAndFilterTrays(this.props.selectedCart, selectedUnit, this.state.sortBy)
         } else if (event.target.name === 'sort') {
             if(event.target.value!=="-1" ){
             this.setState({ sortBy: event.target.value, selectedMealOrder: -1 })
-            if (this.props.isRecovered)
-                this.props.fetchTraysToRecover(this.state.selectedUnit, event.target.value, this.props.parentProps.isOffline);
-            else
-                this.props.sortAndFilterTrays(this.props.selectedCart, this.state.selectedUnit, event.target.value)
+            this.props.sortAndFilterTrays(this.props.selectedCart, this.state.selectedUnit, event.target.value)
+            }
         }
+      }
     }
-    };
 
     recoverTray() {
         var selectedMealOrder = this.props.selectedMealOrder;
         if (selectedMealOrder === undefined || selectedMealOrder.id === undefined)
             console.log("Please select a tray to recover");
         else {
-            this.props.recoverTray(this.props.parentProps.isOffline, this.props.selectedMealOrder.id, this.state.selectedUnit, this.state.sortBy);
+            this.props.recoverTray(this.props.parentProps.isOffline, this.props.selectedMealOrder.id, this.state.selectedUnit, this.state.sortBy, this.state.selectedServiceStyle, this.state.search);
         }
     }
 
     onUndo(mealOrder) {
         if(this.props.isRecovered)
         {
-            this.props.undoRecoveredTray(this.props.parentProps.isOffline, mealOrder.id, this.state.selectedUnit, this.state.sortBy)
+            this.props.undoRecoveredTray(this.props.parentProps.isOffline, mealOrder.id, this.state.selectedUnit, this.state.sortBy, this.state.selectedServiceStyle, this.state.search)
         } else if(this.props.isDelivered){
             this.props.undoDeliveredTray(this.props.selectedCart, mealOrder, this.state.selectedUnit, this.state.sortBy)
             this.setState({selectedMealOrder: -1})
@@ -192,9 +230,13 @@ class OrderListButton extends Component {
         var selectedMealOrder = this.props.isRecovered ? this.props.selectedMealOrder : this.state.selectedMealOrder;
         var deliveryTimeSortLabel = this.props.isRecovered ? TIME_SINCE_DELIVERED_SORT_LABEL : DELIVERY_TIME_SORT_LABEL;
         var sortByArray = [{ id: DELIVERY_DATE_TIME_SORT, name: deliveryTimeSortLabel }, { id: UNIT_ROOM_BED_SORT, name: UNIT_ROOM_BED_SORT_LABEL }]
-        var filters = [{ name: UNIT, value: this.state.selectedUnit, default: SHOW_ALL_UNITS, optionArray: this.props.units, class: 'unit-filter-first' } ,
-        { showDefault: false, name: 'sort', value: this.state.sortBy, optionArray: sortByArray, class: this.props.isRecovered ? 'sort-by-filter': 'sort-by-filter-small' },
-        ]
+        var filters =this.props.isRecovered? [ 
+            { name: SERVICE_STYLE, value: this.state.selectedServiceStyle, default: SHOW_ALL_SERVICE_STYLES, optionArray: this.props.serviceStyles, showDefault: (this.props.serviceStyles && this.props.serviceStyles.length > 1), class: 'service-style-filter select-filter-bar' },
+            { name: UNIT, value: this.state.selectedUnit, default: SHOW_ALL_UNITS, optionArray: this.props.filteredUnits, class: 'service-style-filter select-filter-bar' } ,
+            { showDefault: false, name: 'sort', value: this.state.sortBy, optionArray: sortByArray, class: 'sort-by-filter select-filter-bar' },
+            ]:[ { name: UNIT, value: this.state.selectedUnit, default: SHOW_ALL_UNITS, optionArray: this.props.units, class: 'unit-filter-first' } ,
+            { showDefault: false, name: 'sort', value: this.state.sortBy, optionArray: sortByArray, class:  'sort-by-filter-small' },
+            ]
         const dialogContent = <div style={{margin: '27px', fontWeight: '500'}}>{ERROR_WHILE_DEPARTING_CART_MESSAGE}</div>
         const dialogTitle = <div style= {{color:'transparent'}}>{ERROR_WHILE_DEPARTING_CART}</div>
         return (
@@ -238,6 +280,20 @@ class OrderListButton extends Component {
                         !this.props.isDeparted && !this.props.isHighRiskTrayCheck &&
                         <FiltersComponent filters={filters} onChange={(e) => this.onChangeFilters(e)} />
                     }
+                    {
+                        this.props.isRecovered &&
+                        <div style={{float:'left'}}>
+                        <CustomSearchBar 
+                        placeholder = {SEARCH_LABEL}
+                        class =  "search-custom-bar search-bar-recovered"
+                        display = {this.state.showClear}
+                        onChange = {this.onChangeFilters}
+                        clearSearch = {this.clearSearch}
+                        name = {SEARCH}
+                        value={this.state.search}
+                        />
+                      </div>  
+                    }
 
                     <div className={this.props.isDeparted ? "outer-style less-255" : "outer-style"}>
                         <div className="scroll">
@@ -271,7 +327,13 @@ class OrderListButton extends Component {
                     <div className={this.props.isDeparted ?
                         "cart-details less-255" : this.props.isHighRiskTrayCheck ? "cart-details middle" : "cart-details middle delivered"} >
                         {this.props.isDeparted &&
-                            <div style={{ paddingTop: '57px' }} className="middle">
+                            <div className= {this.props.isTransitional ? "middle transitional-depart" : "middle nontransitional-depart"}>
+                                {this.props.isTransitional &&
+                                <div className={this.props.selectedCart.mealOrders
+                                    && selectedMealOrder !== -1
+                                    ? "btn-tray" : "btn-tray disabled"} color="primary"
+                                    onClick={this.markAsDeparted}><span>{MARK_AS_DEPARTED}</span></div>
+                                    }
                                 <div className={this.props.selectedCart.mealOrders
                                     && selectedMealOrder !== -1
                                     ? "btn-tray" : "btn-tray disabled"} color="primary"
@@ -369,6 +431,8 @@ const mapStateToProps = state => {
         loading: state.loader.loading,
         loadingRecovered: state.loader.loadingRecovered,
         errorWhileHighRiskChecking: state.highRiskTrayCheckReducer.errorWhileHighRiskChecking,
+        serviceStyles: state.recoverReducer.serviceStyles,
+        filteredUnits: state.recoverReducer.filteredUnits,
     }
 }
 const mapDispatchToProps = {
@@ -388,6 +452,9 @@ const mapDispatchToProps = {
     hideConfirmationPopup,
     markCartChecked,
     hideErrorPopup,
+    fetchAllServiceStylesAndUnits,
+    filterUnitBySelectedServiceStyle,
+    filterTraysOnRecovered,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(OrderListButton);
