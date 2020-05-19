@@ -612,7 +612,7 @@ height: 437 !important;}
 		.btn-tray{margin: 20px auto;
 			text-align: center;
 			border: solid 1px #e3e3e3;
-			min-height: 75px;
+			min-height: 105px;
 			font-family: "open_sanslight";
 			text-align: center;
 			color: #999999;
@@ -624,7 +624,12 @@ height: 437 !important;}
 			color: #fff;
 			cursor: pointer;
 			width: 150px;
-			padding: 40px 20px 0 20px; }
+			padding: 0px 20px 0 20px;
+		    vertical-align: middle;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+			
 			.btn-tray.disabled{ background: #bfcef0; pointer-events: none;}
 			.less-160{height: calc(100vh - 160px);}
 		   .less-255{height: calc(100vh - 255px);}
