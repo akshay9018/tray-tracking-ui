@@ -22,6 +22,7 @@ import {
   UPDATE_SELECTED_KITCHEN,
   UPDATE_SELECTED_SERVICE_STYLE,
   FILTER_OUT_CART_ORDERS,
+  FILTER_TRANSITIONAL_TRAYS,
 } from "../actions/Types";
 import { MEAL_ORDER_ALREADY_ADDED, CART_FOR_ZONE_ALREADY_EXISTS, BEDSIDE, UNIT_ROOM_BED_SORT, DELIVERY_DATE_TIME_SORT, SHOW_ALL_MEALS } from "../actions/Constants";
 import { sortOn } from '../../utils/sort'
@@ -42,6 +43,8 @@ export const initialState = {
   selectedServiceStyle: -1,
   selectedKitchen: -1,
   facilityMealNameArray: [],
+  cartMealOrders: [],
+  masterMealOrdersList: [],
 };
 
 export default (state = initialState, action) => {
@@ -167,15 +170,15 @@ export default (state = initialState, action) => {
     }
     case FETCH_CARTS: {
       var responseCarts = action.responseCarts;
-      let noOfZones = 20;
+      let noOfZones = 21;
       let carts = [];
       carts.length = noOfZones;
       for (var i = 0; i < noOfZones; i++) {
         if (responseCarts[i] !== undefined) {
-          carts[responseCarts[i].zone - 1] = responseCarts[i];
-          if (i !== responseCarts[i].zone - 1 && carts[i] === undefined) {
+          carts[responseCarts[i].zone ] = responseCarts[i];
+          if (i !== responseCarts[i].zone  && carts[i] === undefined) {
             var cart = {
-              zone: (i + 1).toString(),
+              zone: (i).toString(),
             }
             carts[i] = cart
           }
@@ -183,7 +186,7 @@ export default (state = initialState, action) => {
         else {
           if (carts[i] === undefined) {
             cart = {
-              zone: (i + 1).toString(),
+              zone: (i).toString(),
             }
             carts[i] = cart
           }
@@ -193,6 +196,26 @@ export default (state = initialState, action) => {
         ...state,
         carts,
       };
+    }
+
+    case FILTER_TRANSITIONAL_TRAYS: {
+    	var mealOrdersList = [...state.masterMealOrdersList]
+    	cartMealOrders = mealOrdersList.filter((mo) => {
+            return (action.selectedKitchenId !== '-1' ? parseInt(mo.kitchenId) === parseInt(action.selectedKitchenId) : true ) }
+    	);
+    	if(action.searchText !== ''){
+	    	var searchText = action.searchText.toLowerCase().trim();
+	    	cartMealOrders = cartMealOrders.filter((mo) => {
+	                return (mo.ticketNumber.toString().includes(searchText)
+	                        || mo.unitName.toLowerCase().includes(searchText)
+	                        || mo.roomName.toLowerCase().includes(searchText)
+	                        || mo.bedName.toLowerCase().includes(searchText))
+	        });
+	    }
+        return {
+            ...state,
+            cartMealOrders,
+        }
     }
     case SELECT_MEAL_ORDER: {
       var selectedMealOrder = action.mealOrder;
@@ -222,7 +245,7 @@ export default (state = initialState, action) => {
         cart.mealOrders = [];
         cart.mealOrders.push(state.selectedMealOrder);
       }
-      state.carts.splice(action.zone - 1, 1, cart);
+      state.carts.splice(action.zone , 1, cart);
       let outOfCartOrders = state.outOfCartOrders;
       outOfCartOrders = outOfCartOrders.filter(item => item.id !== state.selectedMealOrder.id)
       selectedMealOrder = undefined;
@@ -256,11 +279,14 @@ export default (state = initialState, action) => {
     }
     case OPEN_INCART_SUMMARY:
       selectedCart = action.selectedCart
+      var cartMealOrders = selectedCart.mealOrders
       return {
         ...state,
         selectedCart,
         showCartSummary: true,
         selectedScreen: action.selectedScreen,
+        cartMealOrders,
+        masterMealOrdersList: cartMealOrders,
       }
     case DELETE_CART: {
       selectedCart = undefined

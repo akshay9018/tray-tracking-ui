@@ -227,7 +227,7 @@ class InCart extends Component {
                       removeTray={this.removeTray}
                       key={index}
                       active={(this.state.enableLoader && this.props.loadingIncart) || this.state.showRefreshLoading ? false : item && item.mealOrders && item.mealOrders.length > 0}
-                      cart={(this.state.enableLoader && this.props.loadingIncart) || this.state.showRefreshLoading ? { zone: (index + 1).toString(), mealOrders: [] } : item}
+                      cart={(this.state.enableLoader && this.props.loadingIncart) || this.state.showRefreshLoading ? { zone: (index).toString(), mealOrders: [] } : item}
                       addTraysBackToOutCart={this.addTraysBackToOutCart}
                     />
                   );
