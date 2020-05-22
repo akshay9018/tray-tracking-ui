@@ -312,14 +312,14 @@ header .logo img {
 }
 
 header h1 {
-	font-size: 30px;
+	font-size: 25px;
 	font-family: "open_sanslight";
 	color: #fff;
 	position: absolute;
 	width: 100%;
 	font-weight: 100;
 	padding-top: 10px;
-	top: 0px;
+	top: 10px;
 	left: 65px;
 	text-align: left;
 
@@ -1449,14 +1449,14 @@ height: 437 !important;}
 	}
 	
 	header h1 {
-		font-size: 30px;
+		font-size: 25px;
 		font-family: "open_sanslight";
 		color: #fff;
 		position: absolute;
 		width: 100%;
 		font-weight: 100;
 		padding-top: 10px;
-		top: 0px;
+		top: 10px;
 		left: 65px;
 	
 	}
