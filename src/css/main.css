@@ -1287,13 +1287,23 @@ height: 437 !important;}
 	top: 18px;
 }
 .order-info-margin {
-	margin-left: -30px;
 	margin-top: 0px;
+	margin-bottom: 4px;
 }
 .margin-filter {
-	margin-top: -76px;
+	margin-top: -60px;
 	margin-right: -65px;
 	float: right;
+}
+.order-width{
+	width: 115px;
+}
+.order-width-transitional{
+	width: 182px;
+}
+.search-custom-bar-transitional{
+	right: 22px !important;
+	top: 125px !important;
 }
 @media only screen and (max-width: 1024px) {
 	.incart-panel-height{
@@ -1476,7 +1486,9 @@ height: 437 !important;}
 		vertical-align: top;
 		border-radius: 15px;
 	} */
-
+	.order-width-transitional{
+		width: 201px;
+	}
 
 }
 @media only screen and (max-width: 1023px) {
