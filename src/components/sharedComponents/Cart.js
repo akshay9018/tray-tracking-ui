@@ -60,7 +60,7 @@ class Cart extends Component {
    {!cartZone && <div className="zone-number">{this.props.cart.zone < 10 && <span style={{color:'white'}}>0</span>}{this.props.cart.zone}</div>}
           {
             this.props.active ? <div className="cart-info">
-              <div style={{width: '115px'}} className="order-id">{cartZone &&<h4 className="order-info-margin"> Transitional Tray</h4> }{this.props.cart.mealOrders.slice(0,5).map((mealOrder, index) => {
+              <div className= {cartZone ? "order-width-transitional" : "order-id order-width"}>{cartZone &&<h4 className="order-info-margin"> Transitional Tray</h4> }{this.props.cart.mealOrders.slice(0,5).map((mealOrder, index) => {
                         return <span>{index > 0 && index%3 === 0 && <br/>}#{mealOrder.ticketNumber}
                         {index < 4 && index !== this.props.cart.mealOrders.length - 1 && <span>, </span>} 
                         {index === 4 && this.props.cart.mealOrders.length > 5  && <span>...</span>}

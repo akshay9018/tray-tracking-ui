@@ -83,7 +83,7 @@ onChange(event){
     <div style={{float:'left'}}>
     <CustomSearchBar 
       placeholder = {SEARCH_LABEL}
-      class = "search-custom-bar-depart"
+      class = "search-custom-bar-depart search-custom-bar-transitional"
       display = {this.state.showClear}
       onChange = {this.onChange}
       clearSearch = {this.clearSearch}
