@@ -1288,7 +1288,10 @@ height: 437 !important;}
 }
 .order-info-margin {
 	margin-top: 0px;
-	margin-bottom: 4px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	text-align: left;
+	
 }
 .margin-filter {
 	margin-top: -60px;
@@ -1300,6 +1303,7 @@ height: 437 !important;}
 }
 .order-width-transitional{
 	width: 182px;
+	height: 80px;
 }
 .search-custom-bar-transitional{
 	right: 22px !important;
