@@ -45,55 +45,22 @@ class Cart extends Component {
     this.props.selectTrayToRemove(this.props.cart.id, mealOrderId, this.props.cart.zone)
   }
   render() {
+    var cartZone = this.props.cart.zone === 0 || this.props.cart.zone === (0).toString();
     const cartSummary = <CartSummary
       handleActionClick={this.handleActionClick}
       removeTray={this.removeTray}
       selectTrayToRemove={this.selectTrayToRemove}
       dialogActionTitle="Cart Ready For Next Step" mealOrders={this.props.cart.mealOrders}/>
-    var cartZone = ((this.props.cart.zone).toString() === (0).toString()) ? true : false;
-    if(cartZone){
-      return (
-        <div id={this.props.cart.zone}
-  
-          className={this.props.active ? 'cart-zone-box active' : 'cart-zone-box'}
-        >
-          <div className="cart-list"  style={{'border':'solid 3px #e3e3e3'}}  onClick={this.handleClick}>
-            {
-              this.props.active ? <div className="cart-info" >
-                <div className= "order-width-transitional"><h4 className="order-info-margin"> Transitional Tray</h4>{this.props.cart.mealOrders.slice(0,5).map((mealOrder, index) => {
-                          return <span>{index > 0 && index%3 === 0 && <br/>}#{mealOrder.ticketNumber}
-                          {index < 4 && index !== this.props.cart.mealOrders.length - 1 && <span>, </span>} 
-                          {index === 4 && this.props.cart.mealOrders.length > 5  && <span>...</span>}
-                          </span>
-                      })}</div>
-                <div className="total-item">TOTAL<br />
-                  <b>{this.props.cart.mealOrders.length}</b>   </div></div> :
-                   <div className="cart-info">
-                   <span className="grab-cart"> Transitional Trays</span> </div>
-  
-            }
-          </div>
-          <div className="arrow-proceed" onClick={this.handleClickOpen}></div>
-          <MyDialog
-            dialogContent={cartSummary}
-            dialogTitle="Cart Summary"
-            handleClose={this.handleClose}
-            onClick={this.handleClickOpen}
-            open={this.state.open} />
-        </div>
-      );
-    }
-   else {
     return (
       <div id={this.props.cart.zone}
 
         className={this.props.active ? 'cart-zone-box active' : 'cart-zone-box'}
       >
         <div className="cart-list" onClick={this.handleClick}>
-   {<div className="zone-number">{this.props.cart.zone < 10 && <span style={{color:'white'}}>0</span>}{this.props.cart.zone}</div>}
+   {!cartZone && <div className="zone-number">{this.props.cart.zone < 10 && <span style={{color:'white'}}>0</span>}{this.props.cart.zone}</div>}
           {
             this.props.active ? <div className="cart-info">
-              <div className= "order-id order-width">{this.props.cart.mealOrders.slice(0,5).map((mealOrder, index) => {
+              <div className= {cartZone ? "order-width-transitional" : "order-id order-width"}>{cartZone &&<h4 className="order-info-margin"> Transitional Tray</h4> }{this.props.cart.mealOrders.slice(0,5).map((mealOrder, index) => {
                         return <span>{index > 0 && index%3 === 0 && <br/>}#{mealOrder.ticketNumber}
                         {index < 4 && index !== this.props.cart.mealOrders.length - 1 && <span>, </span>} 
                         {index === 4 && this.props.cart.mealOrders.length > 5  && <span>...</span>}
@@ -101,9 +68,12 @@ class Cart extends Component {
                     })}</div>
               <div className="total-item">TOTAL<br />
                 <b>{this.props.cart.mealOrders.length}</b>   </div></div> :
+             !cartZone ?
               <div className="cart-info">
                 <span className="plus-icon">+</span>
-                <span className="grab-cart"> Grab Cart</span> </div>
+                <span className="grab-cart"> Grab Cart</span> </div>:
+                 <div className="cart-info">
+                 <span className="grab-cart"> Transitional Trays</span> </div>
 
           }
         </div>
@@ -116,7 +86,6 @@ class Cart extends Component {
           open={this.state.open} />
       </div>
     );
-        }
   }
 }
 Cart.defaultProps = {
