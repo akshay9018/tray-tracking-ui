@@ -527,7 +527,7 @@ box-shadow: 0px 4px 5px -1px rgba(0,0,0,0.32);
 	text-align: left;
 
 }
-
+.cart-box{     width: calc(100% - 500px);    float: left;}
 .cart-box h4 {
 	/* margin: 20px 0 20px 0; */
 	text-align: left;
@@ -1293,10 +1293,9 @@ height: 437 !important;}
 	text-align: left;
 	
 }
-.margin-filter {
-	margin-top: -60px;
-	margin-right: -65px;
-	float: right;
+.margin-filter {    margin-top: 18px;
+      float: right;
+    width: 500px;
 }
 .order-width{
 	width: 115px;

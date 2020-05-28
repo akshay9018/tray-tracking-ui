@@ -73,14 +73,13 @@ onChange(event){
         {this.props.selectedCart && <div className="container">
         {this.props.loading && <div className="loader"><img alt="Loading. Please wait..." className="loading-gif" src={require("../images/loading.gif")}/></div>}
           <AppHeader props={this.props} showBack={true} title={isTransitional ? TRANSITIONAL_SUMMARY : CART_SUMMARY} />
-          <div className="width-auto text-center" >
-            {isTransitional ?  <span className="cart-box">
-              <h4>{MARK_DEPARTED_FOR_TRANSITIONAL}</h4>
+          <div>
+          {isTransitional ?  <span className="cart-box">
+              <h4 className="pull-left">{MARK_DEPARTED_FOR_TRANSITIONAL}</h4>
             </span> :
              <Button style={{left : '175px'}} variant="contained" color="primary" className={CartBtnClassName} onClick={this.handleActionClick} >Cart Ready for Next Step</Button>}
            {isTransitional&& <div className = "margin-filter"><FiltersComponent menuClass="select-menu-incart" filters={filters} onChange={(e) => this.onChange(e)} />
-    
-    <div style={{float:'left'}}>
+           <div style={{float:'left'}}>
     <CustomSearchBar 
       placeholder = {SEARCH_LABEL}
       class = "search-custom-bar-depart search-custom-bar-transitional"
@@ -92,7 +91,11 @@ onChange(event){
       />
     </div> 
     </div>
-  }
+  }   </div>
+          <div className="width-auto text-center" >
+            
+    
+
             <div className="outer-style less-255">
               <div className="scroll">
                 <OrderTicketList
@@ -105,7 +108,7 @@ onChange(event){
             </div>
           </div>
           <div className="width-330" >
-            <div className={isTransitional ? "cart-details middle less-255 margin-top-less" : "cart-details middle less-255 margin-top-20"} >
+            <div className={isTransitional ? "cart-details middle less-255 " : "cart-details middle less-255 margin-top-20"} >
               <div style={{ margin:'auto' }}>
                 <div className={this.state.selectedMealOrder === -1 ? "btn-tray disabled" : "btn-tray "}
                   color="primary" onClick={this.removeTray}>Remove Tray</div>
