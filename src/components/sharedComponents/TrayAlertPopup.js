@@ -15,7 +15,12 @@ const TrayAlertPopup = (props) => {
   var optionThreeText;
   var customClassName
   if (props.trayAlert && props.trayAlert.patientAlert) {
-    dialogContent = <PatientProfileChangePopup/>
+    dialogContent = 
+    <PatientProfileChangePopup 
+     ticketNumber = {props.ticketNumber}
+     oldDetails = {props.trayAlert.oldDetails}
+     newDetails = {props.trayAlert.newDetails}
+     />
     onAccept = props.proceedWithTray;
     acceptBtnText = PROCEED_WITH_TRAY_LABEL;
     onReject = props.notEaten;
