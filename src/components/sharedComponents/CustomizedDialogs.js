@@ -118,7 +118,7 @@ export default class CustomizedDialogs extends Component {
 
                                 <Button variant="contained" color="primary" className="cart-departed active"
                                     onClick={this.onOptionThree}
-                                    style={{display: this.props.displayOptionThree ? 'inherit' : 'none'}}
+                                    style={{display: this.props.displayOptionThree ? 'initial' : 'none'}}
                                 >{this.props.optionThree} </Button>
 
 

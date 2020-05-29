@@ -13,6 +13,7 @@ const TrayAlertPopup = (props) => {
   var displayOptionThree = false;
   var onOptionThree;
   var optionThreeText;
+  var customClassName
   if (props.trayAlert && props.trayAlert.patientAlert) {
     dialogContent = <PatientProfileChangePopup/>
     onAccept = props.proceedWithTray;
@@ -22,6 +23,7 @@ const TrayAlertPopup = (props) => {
     onOptionThree = props.sendToHold;
     optionThreeText = SEND_TO_HOLD_LABEL;
     displayOptionThree = true;
+    customClassName = "popup-patient-alert-width"
   }
 
   return (
@@ -37,7 +39,8 @@ const TrayAlertPopup = (props) => {
       displayOptionThree={displayOptionThree}
       optionThree={optionThreeText}
       onOptionThree={onOptionThree}
-      handleClose={props.handleClose} />
+      handleClose={props.handleClose}
+      customClassName={customClassName} />
   );
 }
 TrayAlertPopup.defaultProps = {

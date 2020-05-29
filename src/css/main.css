@@ -1213,7 +1213,7 @@ height: 437 !important;}
 .top-bottom-10{ margin: 10px auto !important}
 .popup-sm-width> div > div{ max-width: 650px; width: 100%;}
 .popup-xsm-width> div > div{ max-width: 393px; width: 100%;}
-
+.popup-patient-alert-width> div > div{ max-width: 750px; width: 100%;}
 .text-blue{    text-align: center !important;
     color: #6084da !important;
 	font-size: 20px !important;
