@@ -61,6 +61,7 @@ export default class CustomizedDialogs extends Component {
         this.handleClose = this.handleClose.bind(this)
         this.onAccept = this.onAccept.bind(this);
         this.onReject = this.onReject.bind(this);
+        this.onOptionThree = this.onOptionThree.bind(this);
     }
     
     handleClickOpen() {
@@ -76,7 +77,11 @@ export default class CustomizedDialogs extends Component {
     }
 
     onReject() {
-        this.props.handleClose()
+        this.props.onReject()
+    }
+
+    onOptionThree() {
+        this.props.onOptionThree()
     }
 
     render() {
@@ -108,8 +113,14 @@ export default class CustomizedDialogs extends Component {
                                 >{this.props.acceptBtn}</Button>
 
                                 <Button variant="contained" color="primary" className="cart-departed active"
-                                    onClick={this.onReject}
+                                    onClick={this.props.actionOnReject ? this.onReject : this.handleClose}
                                 >{this.props.rejectBtn} </Button>
+
+                                <Button variant="contained" color="primary" className="cart-departed active"
+                                    onClick={this.onOptionThree}
+                                    style={{display: this.props.displayOptionThree ? 'inherit' : 'none'}}
+                                >{this.props.optionThree} </Button>
+
 
                             </div>
                         }
@@ -133,5 +144,6 @@ export default class CustomizedDialogs extends Component {
 
 CustomizedDialogs.defaultProps = {
     acceptBtn : 'Yes',
-    rejectBtn : 'No'
+    rejectBtn : 'No',
+    actionOnReject: false,
 }

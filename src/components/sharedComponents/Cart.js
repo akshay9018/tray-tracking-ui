@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import MyDialog from './CustomizedDialogs';
 import CartSummary from '../CartSummary';
+import { REVIEW_ALERT_MEAL_ORDERS, CART_READY_FOR_NEXT_STEP } from "../../redux/actions/Constants";
 class Cart extends Component {
   constructor(props) {
     super(props);
@@ -57,7 +58,8 @@ class Cart extends Component {
   
           className={this.props.active ? 'cart-zone-box active' : 'cart-zone-box'}
         >
-          <div className="cart-list"  style={{'border':'solid 3px #e3e3e3'}}  onClick={this.handleClick}>
+		<div style={{'border':'solid 3px #e3e3e3'}} className={this.props.cart.containsTrayAlert ? 'alert-cart cart-list':"cart-list"} onClick={this.handleClick}>
+          
             {
               this.props.active ? <div className="cart-info" >
                 <div className= "order-width-transitional"><h4 className="order-info-margin"> Transitional Tray</h4>{this.props.cart.mealOrders.slice(0,5).map((mealOrder, index) => {

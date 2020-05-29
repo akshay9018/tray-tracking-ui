@@ -3,17 +3,17 @@ import { RUSH, NOW } from "../../redux/actions/Constants";
 
 const OrderTicket = (props) => {
   return(
-    <div id={props.mealOrder.id} onClick={() => props.handleClick(props.mealOrder, props.isUndoEnable)}
-      className={props.active? 'order-detail-list active': 'order-detail-list' }>
+    <div id={props.mealOrder.id} onClick={() => props.handleClick ? props.handleClick(props.mealOrder, props.isUndoEnable): undefined}
+      className={props.active && !props.mealOrder.trayAlert? 'order-detail-list active': 'order-detail-list' }>
         {
                     props.isUndoEnable ? 
                     <div className="tray-delivered">
-                         <button onClick={() => props.onUndo(props.mealOrder)} className="undo-bttn">Undo	</button>
+                         <button onClick={() => props.onUndo(props.mealOrder)} className={props.mealOrder.trayAlertId ? "on-hold undo-bttn" : "undo-bttn"}>Undo	</button>
                     </div> : null
                 }
       <div className="header-dark">
         <div className="pull-left">#{props.mealOrder.ticketNumber}</div>
-        <div className="pull-right">Zone {props.mealOrder.zone}</div>
+        <div className="pull-right">Zone {props.mealOrder.zone} {props.mealOrder.trayAlert && 'Alerted'}</div>
       </div>
       <div className="text-bold">
       <span className="text-ellipsis"  style={{maxWidth: '90%'}}>{props.mealOrder.unitName}</span>

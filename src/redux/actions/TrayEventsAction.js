@@ -1,8 +1,10 @@
-import { LOADING, GET_UNIT_DELIVERY_INITIAL_STATE } from "./Types";
+import { LOADING, GET_UNIT_DELIVERY_INITIAL_STATE, CLEAR_ON_HOLD_PRINTED_TRAYS } from "./Types";
 
 export const goToInCart =(history) => 
 ((dispatch) => {
     dispatch({type:LOADING, flag:false})
+
+    //dispatch({type:CLEAR_ON_HOLD_PRINTED_TRAYS})
     history.push('/inCart');
 });
 

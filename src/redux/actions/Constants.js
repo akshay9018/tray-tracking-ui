@@ -97,4 +97,18 @@ export const INCART_SORT_BY_OPTION_ARRAY = [{ id: DELIVERY_DATE_TIME_SORT, name:
 
 //css file name for themes
 export const DARK_MODE = "DarkMode"
-export const LIGHT_MODE = "LightMode"
+export const LIGHT_MODE = "LightMode" 
+
+//alert types
+export const ALERT_PATIENT_LABEL = "ALERT PATIENT"
+export const ALERT_TRANSFER_LABEL = "ALERT TRANSFER"
+export const ALERT_DISCHARGE_LABEL = "ALERT DISCHARGE"
+export const SEND_TO_HOLD_LABEL = "SEND TO HOLD"
+export const NOT_EATEN_LABEL = "NOT EATEN"
+export const PROCEED_WITH_TRAY_LABEL = "PROCEED WITH TRAY"
+export const ALERT_LABEL = "ALERT"
+
+export const ERROR_WHILE_ACKNOWLEDGING_ALERT = "Error while acknowledging alert. Please try again later."
+
+export const CART_READY_FOR_NEXT_STEP = "Cart Ready For Next Step"
+export const REVIEW_ALERT_MEAL_ORDERS = "Review Alert Meal Orders"

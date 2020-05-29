@@ -10,6 +10,7 @@ import dropDown from './DropDownReducer';
 import unitTrackingReducer from './UnitTrackingReducer';
 import offlineIndicator from './OfflineIndicatorReducer';
 import highRiskTrayCheckReducer from './HighRiskTrayCheckReducer';
+import trayAlertReducer from './TrayAlertReducer';
 
 const RootReducer = combineReducers({
     login,
@@ -23,6 +24,7 @@ const RootReducer = combineReducers({
     offlineIndicator,
     highRiskTrayCheckReducer,
     unitTrackingReducer,
+    trayAlertReducer
 });
 
 export default RootReducer;

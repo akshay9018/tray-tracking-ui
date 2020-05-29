@@ -15,7 +15,7 @@ import {
     FILTER_KITCHENS_FOR_SELECTED_SERVICE_STYLE,
 } from '../actions/Types';
 import { DELIVERED, DEPARTED, DELIVERY_DATE_TIME_SORT, DELIVERED_STATUS, RECOVERED_STATUS, INCART, INDEX_ID_SORT } from '../actions/Constants';
-import { sortOn } from '../../utils/sort'
+import { sortOn, sortCartsByTransitionalStatus } from '../../utils/sort'
 
 export const initialState = {
     carts: [],
@@ -62,7 +62,7 @@ export default (state = initialState, action) => {
                 filteredKitchens,
             }
         case READY_TO_DEPART_CARTS:
-            var allDepartedCartList = action.data
+            var allDepartedCartList = action.data.sort(sortCartsByTransitionalStatus()) 
             return {
                 ...state,
                 allDepartedCartList,

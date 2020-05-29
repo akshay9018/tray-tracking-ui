@@ -432,9 +432,9 @@ box-shadow: 0px 4px 5px -1px rgba(0,0,0,0.32);
     opacity: 0.6;
 	cursor: pointer;
 }
-
+.alert-cart{ border: solid red !important;}
 .outer-style {
-	border: solid 1px #e6e6e6;
+	border: solid 1px #e6e6e6; 
 	clear: both;
 	-webkit-box-shadow: 0px 0px 85px 0px rgba(237, 237, 237, 1);
 	-moz-box-shadow: 0px 0px 85px 0px rgba(237, 237, 237, 1);
@@ -607,7 +607,8 @@ height: 437 !important;}
 		top: -5px;  }
 
 	.cart-list{border-radius: 3px; display: flex; min-height: 81px;       float: left;
-		width: calc(100% - 50px);   }
+		width: calc(100% - 50px);  
+		border:solid 3px #e3e3e3 }
 
 		.cart-list.white-bg{ background: #fff;  	width: calc(100% - 30px); }
 		.btn-tray{margin: 20px auto;

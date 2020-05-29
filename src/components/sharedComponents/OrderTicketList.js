@@ -8,7 +8,8 @@ const OrderTicketList = (props) => {
                 handleClick={props.handleClick}
                 key={index}
                 mealOrder={item}
-                active={props.selectedMealOrder && props.selectedMealOrder.id && props.selectedMealOrder.id===item.id}
+                active={props.selectedMealOrder && props.selectedMealOrder.id 
+                    && !props.selectedMealOrder.trayAlert && props.selectedMealOrder.id===item.id}
                 isUndoEnable={item.isUndoEnable} 
                 showDeliveryTime={props.showDeliveryTime}
                 onUndo={props.onUndo}

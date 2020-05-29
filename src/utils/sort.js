@@ -1,4 +1,4 @@
-import { UNIT_ROOM_BED_SORT , DELIVERY_DATE_TIME_SORT, TICKET_NUMBER_SORT, INDEX_ID_SORT } from "../redux/actions/Constants";
+import { UNIT_ROOM_BED_SORT , DELIVERY_DATE_TIME_SORT, TICKET_NUMBER_SORT, INDEX_ID_SORT, TRANSITIONAL } from "../redux/actions/Constants";
 export function sortOn(sortByParam, isRecovered, inCart) {
     if(inCart){
         return sortIncartOrders(sortByParam);
@@ -135,3 +135,10 @@ function sortingByURBAndTicketNum(a, b) {
     }
 } 
 
+export function sortCartsByTransitionalStatus() {
+    return function (a, b) {
+        if(a.status === TRANSITIONAL){
+            return -1;
+        }
+    }
+}

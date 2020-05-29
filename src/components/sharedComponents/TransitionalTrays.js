@@ -55,7 +55,7 @@ class TransitionalTrays extends Component {
             console.log("Please select a tray to depart");
         else {
             this.props.markTrayAsDeparted(this.state.selectedMealOrder, this.props.selectedCart.mealOrders.length - 1);
-            this.setState({ showTrayDepartedConfirm: false, selectMealOrder: -1 })
+            this.setState({ showTrayDepartedConfirm: false, selectedMealOrder: -1 })
         }
     }
 

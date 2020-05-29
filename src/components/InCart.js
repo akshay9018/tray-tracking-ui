@@ -2,13 +2,21 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import AppHeader from "./sharedComponents/AppHeader";
 import { addOrderToCompletedCart } from '../redux/actions/DepartureAction'
-import { fetchAllServiceStylesForSelectedFacility, fetchAllKitchensForSelectedFacility, fetchOutCartOrders, selectMealOrder, fetchCarts, addOrderToCart, fetchAllUnitsForSelectedKitchen, markCartAsComplete, removeTrayFromCart, unselectMealOrder, openInCartSummary, closeAlertMessage, updateSelectedSortBy, fetchFacilityMealNameArrayForSelectedFacility, updateSelectedMealName, updateSelectedServiceStyle, updateSelectedKitchen, updateSelectedUnit, filterOutCartOrders } from '../redux/actions/InCartAction';
+import {
+  fetchAllServiceStylesForSelectedFacility, fetchAllKitchensForSelectedFacility, fetchOutCartOrders, selectMealOrder, fetchCarts, addOrderToCart, fetchAllUnitsForSelectedKitchen, markCartAsComplete, removeTrayFromCart, unselectMealOrder, openInCartSummary, closeAlertMessage, updateSelectedSortBy, fetchFacilityMealNameArrayForSelectedFacility, updateSelectedMealName, updateSelectedServiceStyle, updateSelectedKitchen, updateSelectedUnit, filterOutCartOrders,} from '../redux/actions/InCartAction';
+import {  fetchTrayAlertDetails,
+  acknowledgeAlert,
+  closeAlertedTicketMessage,
+  undoAlert 
+} from '../redux/actions/TrayAlertAction';
 import Cart from "./sharedComponents/Cart";
 import OrderTicketList from "./sharedComponents/OrderTicketList";
 import FiltersComponent from "./sharedComponents/FiltersComponent";
-import { INCART_SCREEN_NAME, NO_MORE_TRAYS, SHOW_ALL_SERVICE_STYLES, SHOW_ALL_BUILD_AREAS, SHOW_ALL_UNITS, UNIT, BUILD_AREA, SERVICE_STYLE, CART_SUMMARY, ERROR_WHILE_ADDING_MEAL_ORDERS, OFFLINE_MODE_ON_MESSAGE, LOAD_NEW_TRAYS, INCART_SORT_BY_OPTION_ARRAY, SORT_BY, MEAL_NAME, SEARCH, SEARCH_LABEL } from "../redux/actions/Constants";
+import { INCART, INCART_SCREEN_NAME, NO_MORE_TRAYS, SHOW_ALL_SERVICE_STYLES, SHOW_ALL_BUILD_AREAS, SHOW_ALL_UNITS, UNIT, BUILD_AREA, SERVICE_STYLE, CART_SUMMARY, ERROR_WHILE_ADDING_MEAL_ORDERS, OFFLINE_MODE_ON_MESSAGE, LOAD_NEW_TRAYS, INCART_SORT_BY_OPTION_ARRAY, SORT_BY, MEAL_NAME, SEARCH, SEARCH_LABEL, ERROR_WHILE_ACKNOWLEDGING_ALERT } from "../redux/actions/Constants";
 import CustomizedDialogs from "./sharedComponents/CustomizedDialogs";
 import CustomSearchBar from "./sharedComponents/CustomSearchBar";
+import TrayAlertPopup from "./sharedComponents/TrayAlertPopup";
+import { SEND_TO_HOLD, PROCEED_WITH_TRAY, NOT_EATEN } from "../redux/actions/Types";
 
 class InCart extends Component {
   constructor(props) {
@@ -34,7 +42,12 @@ class InCart extends Component {
     this.openInCartSummary = this.openInCartSummary.bind(this);
     this.closeAlertMessage = this.closeAlertMessage.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    this.clearSearch = this.clearSearch.bind(this)
+    this.clearSearch = this.clearSearch.bind(this);
+    this.sendToHold = this.sendToHold.bind(this);
+    this.proceedWithTray = this.proceedWithTray.bind(this);
+    this.closeAlertedTicketMessage = this.closeAlertedTicketMessage.bind(this);
+    this.undoAlert = this.undoAlert.bind(this);
+    this.notEaten = this.notEaten.bind(this)
   }
   clearSearch(){
     this.setState({showClear: false, search: ''})
@@ -94,10 +107,36 @@ class InCart extends Component {
       this.setState({ mealOrderSelected: false, })
     }
     else {
-      this.props.selectMealOrder(mealOrder);
-      this.setState({ mealOrderSelected: true, })
+        this.props.selectMealOrder(mealOrder);
+        this.setState({ mealOrderSelected: true, })
+        if (mealOrder.trayAlert) {
+          this.props.fetchTrayAlertDetails(mealOrder)
+        }
     }
   }
+
+  sendToHold() {
+    this.props.acknowledgeAlert(INCART, this.props.selectedMealOrder, this.props.alertList, SEND_TO_HOLD, this.state.search)
+  }
+
+  proceedWithTray() {
+    this.props.acknowledgeAlert(INCART, this.props.selectedMealOrder, this.props.alertList, PROCEED_WITH_TRAY)
+  }
+
+  notEaten() {
+    this.props.acknowledgeAlert(INCART, this.props.selectedMealOrder, this.props.alertList, NOT_EATEN)
+  }
+
+  closeAlertedTicketMessage() {
+    this.props.unselectMealOrder()
+    this.setState({ mealOrderSelected: false, })
+    this.props.closeAlertedTicketMessage()
+  }
+
+  undoAlert(mealOrder) {
+    this.props.undoAlert(INCART, mealOrder, this.state.searchText)
+  }
+
   returnSelectedCart(zone, cartId, hasMealOrders) {
     if (this.state.mealOrderSelected === false)
       console.log("Please select an order before adding to this cart!")
@@ -166,15 +205,16 @@ class InCart extends Component {
       { name: MEAL_NAME, value: this.props.selectedMealName, showDefault: false, optionArray: this.props.facilityMealNameArray, class: 'incart-filter' },
       { name: SORT_BY, value: this.props.selectedSortBy, showDefault: false, optionArray: INCART_SORT_BY_OPTION_ARRAY, class: 'incart-filter' }
     ]
-    const dialogContent = <div style={{margin: '27px'}}>{this.props.alertMessage}</div>
-    return ( 
+    const errorOnAcknowleAlert = <div style={{ margin: '27px' }}>{ERROR_WHILE_ACKNOWLEDGING_ALERT}</div>
+    const dialogContent = <div style={{ margin: '27px' }}>{this.props.alertMessage}</div>
+    return (
       <div className={this.state.isInCart ? "container" : ""}>
         {!this.state.isInCart && this.props.isOffline &&
         <div style={{background: '#d2cece', color: '#676565', paddingLeft: '65px'}}><span> {OFFLINE_MODE_ON_MESSAGE} </span></div>
     }
         {this.state.showRefreshLoading && <div className="loader" style={{ background: 'transparent' }} />}
         {this.state.enableLoader && this.props.loadingIncart && <div className="loader"><img alt="Loading. Please wait..." className="loading-gif" src={require("../images/loading.gif")} /></div>}
-        {this.state.isInCart && <AppHeader props={this.props} headerClass="bg-incart-header" title={this.props.screenName} />}
+        {this.state.isInCart && <AppHeader props={this.props} title={this.props.screenName} />}
         <div style={{ marginLeft: '-10px' }}>
         <div style={{float:'left', position:'relative'}}>
           <FiltersComponent menuClass="select-menu-incart" filters={filters} onChange={(e) => this.onChange(e)} />
@@ -208,6 +248,16 @@ class InCart extends Component {
                   mealOrders={this.props.outOfCartOrders}
                   selectedMealOrder={this.props.selectedMealOrder}
                 />}
+              {(this.state.enableLoader && this.props.loadingIncart) || this.state.showRefreshLoading ?
+                null :
+                <div>
+                  <OrderTicketList
+                    emptyListMessage=""
+                    mealOrders={this.props.onHoldTrays}
+                    onUndo={this.undoAlert}
+                  />
+                </div>
+                }
             </div>
           </div>
         </div>
@@ -252,6 +302,22 @@ class InCart extends Component {
                         open={this.props.showAlertMessage} fullScreen={false}
                         handleClose={this.closeAlertMessage} />
                 }
+        {this.props.errorOnAcknowledgment &&
+          <CustomizedDialogs dialogTitle=""
+            dialogContent={errorOnAcknowleAlert}
+            open={this.props.errorOnAcknowledgment} fullScreen={false}
+            handleClose={this.closeAlertedTicketMessage} />
+        }
+        {this.props.showAlertedTrayMessage &&
+          <TrayAlertPopup
+            open={this.props.showAlertedTrayMessage}
+            sendToHold={this.sendToHold}
+            proceedWithTray={this.proceedWithTray}
+            notEaten={this.notEaten}
+            handleClose={this.closeAlertedTicketMessage}
+            trayAlert={this.props.alertList.length > 0 ? this.props.alertList[0] : undefined}
+            ticketNumber={this.props.selectedMealOrder ? this.props.selectedMealOrder.ticketNumber : ''} />
+        }
       </div>
     );
   }
@@ -277,6 +343,10 @@ const mapStateToProps = state => {
     loadingMealOrdersAndCarts: state.loader.loadingMealOrdersAndCarts,
     loadingIncart: state.loader.loadingIncart,
     isOffline: state.offlineIndicator.isOffline,
+    alertList: state.trayAlertReducer.alertList,
+    showAlertedTrayMessage: state.trayAlertReducer.showAlertedTrayMessage,
+    onHoldTrays: state.inCartReducer.onHoldTrays,
+    errorOnAcknowledgment: state.trayAlertReducer.errorOnAcknowledgment,
   }
 }
 const mapDispatchToProps = {
@@ -300,6 +370,10 @@ const mapDispatchToProps = {
   updateSelectedUnit,
   fetchFacilityMealNameArrayForSelectedFacility,
   filterOutCartOrders,
+  fetchTrayAlertDetails,
+  acknowledgeAlert,
+  closeAlertedTicketMessage,
+  undoAlert
 }
 
 InCart.defaultProps = {
