@@ -96,14 +96,14 @@ header {
 .width-350 {
 	width: 350px;
 }
-.header-dark, .ticket-footer-dark{ background: #44aabb;}
+.header-dark, .ticket-footer-dark{ background:rgba(0,0,0, 0.1)}
 
 .order-detail-list.active {
 	background: #6084da !important;
 }
 
 .order-detail-list.active .header-dark{
-	background: #5775bc;
+	background:rgba(0,0,0, 0.1)
 }
 
 .order-detail-list.active .ticket-footer-dark{

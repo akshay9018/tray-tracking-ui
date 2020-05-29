@@ -862,8 +862,8 @@ height: 437 !important;}
 	background: #da6060;
 }
 
-.order-detail-list.red .header-dark{
-	background: #bc5757;
+.order-detail-list.red .header-dark, .order-detail-list.red .ticket-footer-dark{
+	background: rgba(0,0,0, 0.1);
 }
 
 .heading {
@@ -1213,7 +1213,15 @@ height: 437 !important;}
 .top-bottom-10{ margin: 10px auto !important}
 .popup-sm-width> div > div{ max-width: 650px; width: 100%;}
 .popup-xsm-width> div > div{ max-width: 393px; width: 100%;}
-.popup-patient-alert-width> div > div{ max-width: 750px; width: 100%;}
+.popup-patient-alert-width> div > div{ max-width:900px; width: 100%;}
+.popup-patient-alert-width> div > div .content{ padding: 0px 20px;}
+.popup-patient-alert-width> div > div .content p{ font-size: 18px; text-align: left; 	font-family: "open_sansbold"; margin: 0px;} 
+.patient-details-50{ width:50%; display: inline-block;}
+.patient-details-50 .border{ width: calc(100% - 10px); border: solid 1px #e3e3e3;  border-radius: 10px;}
+.patient-details-50 h2{  margin: 0px;    padding: 0px;    text-align: left;   	font-family: "open_sansbold"; color: #555;   font-size:18px;}
+.patient-details-50 ul {max-height: 200px; height: 200px; min-height: 200px; overflow-y: auto; overflow-x: hidden; margin: 0px; padding: 0px;}
+.patient-details-50 ul li{     display: block;    text-align: left;   	font-family: "open_sansbold";   color: #555;    font-size: 14px;    margin:5px 10px;}
+
 .text-blue{    text-align: center !important;
     color: #6084da !important;
 	font-size: 20px !important;
