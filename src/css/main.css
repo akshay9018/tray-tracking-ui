@@ -1217,7 +1217,7 @@ height: 437 !important;}
 .popup-patient-alert-width> div > div .content{ padding: 0px 20px;}
 .popup-patient-alert-width> div > div .content p{ font-size: 18px; text-align: left; 	font-family: "open_sansbold"; margin: 0px;} 
 .patient-details-50{ width:50%; display: inline-block;}
-.patient-details-50 .border{ width: calc(100% - 10px); border: solid 1px #e3e3e3;  border-radius: 10px; max-height: 200px; height: 200px; min-height: 200px; overflow-y: auto; overflow-x: hidden;}
+.patient-details-50 .border{ width: calc(100% - 10px); border: solid 1px #e3e3e3;  border-radius: 10px;  overflow-y: auto; overflow-x: hidden;}
 .patient-details-50 h2{  margin: 0px;    padding: 0px;    text-align: left;   	font-family: "open_sansbold"; color: #555;   font-size:18px;}
 .patient-details-50 h2 > span{ color: #000;}
 .patient-details-50 ul { margin: 0px; padding: 0px;}
@@ -1228,6 +1228,32 @@ height: 437 !important;}
 	font-size: 20px !important;
 	font-family: "open_sanslight" !important ;
 }
+
+
+.table-alert-box{ width: 100%; text-align: left;}
+
+h2.heading-text{margin: 0px;
+    padding: 0px;
+    text-align: left;
+    font-family: "open_sansbold";
+    color: #555;
+	font-size: 18px;
+	width: 50%;
+	float: left;
+}
+
+.table-alert-box.border{ border-radius: 10px; border: solid 1px #ddd; padding: 0px 0px; margin: 0px;  border-collapse: collapse;}
+
+.table-alert-box tr td { border-collapse: collapse; width: 50%; padding: 0px 20px;       font-family: "open_sansbold";  margin: 0px;
+	color: #555;
+	vertical-align: top;
+	font-size: 14px;}
+	
+	.table-alert-box tr td  span{color: #000;}
+
+	.table-alert-box tr td:first-child{ border-right:solid #ddd 1px;}
+
+
 
 .cart-departed-confirm{ background: #c0c7c2 !important; color: #fff; border-radius: 30px !important; margin: 20px auto !important;     padding: 15px 50px !important;}
 
