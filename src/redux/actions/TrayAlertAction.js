@@ -18,85 +18,8 @@ export const fetchTrayAlertDetails = (mealOrder) => {
             dispatch({ type: FETCH_ALERT_MEAL_ORDER_DETAILS, alertList: response.data })
             dispatch({ type: LOADING_SCREEN, loadingAlert: false })
         }).catch((e) => {
-            var alertList = [
-    
-                {
-                    "id": 26,
-                    "alertType": "ALERT_PATIENT",
-                    "acknowledgementType": null,
-                    "acknowledgedOn": null,
-                    "acknowledgedBy": null,
-                    "oldDetails": {
-                        "bedId": null,
-                        "bedName": null,
-                        "roomId": null,
-                        "roomName": null,
-                        "unitId": null,
-                        "unitName": null,
-                        "diet": "Reg/Pureed Meats, ",
-                        "allergies": "**NF-**",
-                        "supplements": "",
-                        "tubeFeedings": "",
-                        "instructions": "deqdew3q",
-                        "preferences": "ewdw3rw3qwer5"
-                    },
-                    "newDetails": {
-                        "bedId": null,
-                        "bedName": null,
-                        "roomId": null,
-                        "roomName": null,
-                        "unitId": null,
-                        "unitName": null,
-                        "diet": "Reg/Pureed Meats, *Standard1, 1200 - 1400 kcal, 1400 - 1600 kcal, 1600 - 1800 kcal1",
-                        "allergies": "**NF-**",
-                        "supplements": "",
-                        "tubeFeedings": "",
-                        "instructions": "deqdew3q",
-                        "preferences": "ewdw3rw3qwer5"
-                    },
-                    "patientAlert": true,
-                    "transferAlert": false,
-                    "dischargeAlert": false
-                },
-                {
-                    "id": 27,
-                    "alertType": "ALERT_PATIENT",
-                    "acknowledgementType": null,
-                    "acknowledgedOn": null,
-                    "acknowledgedBy": null,
-                    "oldDetails": {
-                        "bedId": null,
-                        "bedName": null,
-                        "roomId": null,
-                        "roomName": null,
-                        "unitId": null,
-                        "unitName": null,
-                        "diet": "Reg/Pureed Meats, ",
-                        "allergies": "**NF-**",
-                        "supplements": "",
-                        "tubeFeedings": "",
-                        "instructions": "deqdew3q",
-                        "preferences": "ewdw3rw3qwer5"
-                    },
-                    "newDetails": {
-                        "bedId": null,
-                        "bedName": null,
-                        "roomId": null,
-                        "roomName": null,
-                        "unitId": null,
-                        "unitName": null,
-                        "diet": "Reg/Pureed Meats, *Standard1, 1200 - 1400 kcal, 1400 - 1600 kcal, 1600 - 1800 kcal1",
-                        "allergies": "**NF-**",
-                        "supplements": "",
-                        "tubeFeedings": "",
-                        "instructions": "deqdew3q",
-                        "preferences": "ewdw3rw3qwer5"
-                    },
-                    "patientAlert": true,
-                    "transferAlert": false,
-                    "dischargeAlert": false
-                }
-            ]
+            var alertList = [{"mealOrderId":11430,"id":141,"alertType":"ALERT_PATIENT","acknowledgementType":null,"acknowledgedOn":null,"acknowledgedBy":null,"oldDetails":{"zone":null,"unitName":null,"roomName":null,"bedName":null,"kitchenId":null,"unitId":null,"bedId":null,"diet":"Reg/Pureed Meats, Six Small Meals, Thick Fluids-Honey","allergies":"","supplements":"e","tubeFeedings":"eerrr, tete","instructions":"","preferences":"","textureId":343,"specialDiets":"Six Small Meals, Thick Fluids-Honey","notes":null},"newDetails":{"zone":null,"unitName":null,"roomName":null,"bedName":null,"kitchenId":null,"unitId":null,"bedId":null,"diet":"Reg/Pureed Meats, 1800 - 2000 kcal 1800 - 2000 kcal 1800 - 2000 kcal, Six Small Meals, Thick Fluids-Honey","allergies":"","supplements":"e, rr, testing is completed from testing is completed from ","tubeFeedings":"eerrr, testint gitnsdj asdgfsaydfgiusf ligfdoy8fwgidyAO8YDGIAFGYS , tete","instructions":"","preferences":"sdfasf vsfdfgsdgd gegwegdf grerwgdsfb sdfgsdcgsd","textureId":343,"specialDiets":"1800 - 2000 kcal 1800 - 2000 kcal 1800 - 2000 kcal, Six Small Meals, Thick Fluids-Honey","notes":null},"eventTime":null,"patientAlert":true,"transferAlert":false,"dischargeAlert":false},{"mealOrderId":11430,"id":140,"alertType":"ALERT_PATIENT_NOTE","acknowledgementType":null,"acknowledgedOn":null,"acknowledgedBy":null,"oldDetails":{"zone":null,"unitName":null,"roomName":null,"bedName":null,"kitchenId":null,"unitId":null,"bedId":null,"diet":"--, Six Small Meals, Thick Fluids-Honey","allergies":"","supplements":"e","tubeFeedings":"eerrr, tete","instructions":"","preferences":"","textureId":343,"specialDiets":"Six Small Meals, Thick Fluids-Honey","notes":null},"newDetails":{"zone":null,"unitName":null,"roomName":null,"bedName":null,"kitchenId":null,"unitId":null,"bedId":null,"diet":"--","allergies":"","supplements":"e, rr, testing is completed from testing is completed from ","tubeFeedings":"eerrr, testint gitnsdj asdgfsaydfgiusf ligfdoy8fwgidyAO8YDGIAFGYS , tete","instructions":"","preferences":"sdfasf vsfdfgsdgd gegwegdf grerwgdsfb sdfgsdcgsd","textureId":343,"specialDiets":null,"notes":"qwert"},"eventTime":null,"patientAlert":true,"transferAlert":false,"dischargeAlert":false}]
+
             console.log("Error while fetching tray trayAlert details: " + e)
             dispatch({ type: LOADING_SCREEN, loadingAlert: false })
             dispatch({ type: FETCH_ALERT_MEAL_ORDER_DETAILS, alertList })
