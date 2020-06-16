@@ -2,6 +2,7 @@ import React from "react";
 
 const PatientProfileChangePopup = (props) => {
   return (
+    <div>
     <div className="content" >
       <p> Changes were made to patient profile for ticket #{props.ticketNumber}. Please review the changes for this patient.</p>
       
@@ -33,7 +34,37 @@ const PatientProfileChangePopup = (props) => {
        </div> 
        </div>
       </div>
- 
+      <div className="content">
+
+      <p> Changes were made to patient profile for ticket #{props.ticketNumber}. Please review the changes for this patient.</p>
+          <h2 className="heading-text"> Previous Patient Details</h2>
+          <h2 className="heading-text">Current Patient Details</h2>
+
+      <table className="table-alert-box border" >
+            <tr>
+              <td>Allergies <span>ssssss ffhffhf ffuf fuf fyf ffyhf </span> </td>
+              <td>Allergies <span>fhfyghf ffyfbfyfb fyf f</span></td>
+            </tr>
+
+            <tr>
+              <td>Supplements: <span>ssssss ffhffhf ffuf fuf fyf ffyhf </span>  </td>
+              <td>Supplements: <span>fhfyghf ffyfbfyfb fyf f</span></td>
+            </tr>
+
+            <tr>
+              <td>Tube Feeding: <span>ssssss ffhffhf ffuf fuf fyf ffyhf </span> </td>
+              <td>Tube Feeding: <span>fhfyghf dggdgdg dydhbdduydd d dudhd d dudd  ddud ddudd dudbd ddydbd  dffyfbfyfb fyf f</span></td>
+            </tr>
+
+            <tr>
+              <td>Patient Notes: <span>ssssss ffhffhf ffuf fuf fyf ffyhf </span> </td>
+              <td>Patient Notes:<span>fhfyghf ffyfbfyfb fyf f</span></td>
+            </tr>
+
+          </table>
+
+      </div>
+ </div>
   );
 }
 PatientProfileChangePopup.defaultProps = {
