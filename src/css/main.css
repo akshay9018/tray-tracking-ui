@@ -1238,13 +1238,19 @@ h2.heading-text{margin: 0px;
     font-family: "open_sansbold";
     color: #555;
 	font-size: 18px;
-	width: 50%;
 	float: left;
+	background-color: darkorchid;
+	color:#fff;
+	padding: 0 0px 0px 20px;
+	width: calc(50% - 28px);
 }
+
+h2.heading-text.heading-2{ padding-right: 20px; background-color: #3f94d0; width: calc(50% - 32px);}
 
 .table-outer{ height: 250px; overflow-y: auto; float: left; border:solid 1px #ddd;}
 
 .popup-patient-alert-width .popup-header{       padding: 8px 16px 5px;}
+.popup-patient-alert-width  h3{padding-top: 0px !important; }
 .popup-patient-alert-width .popup-header .close-btn {    position: absolute;    color: #fff;    right: 0px;    top: 0px;}
 
 .table-alert-box.border{ border-radius: 10px; padding: 0px 0px; margin: 0px;  border-collapse: collapse;}
@@ -1252,11 +1258,12 @@ h2.heading-text{margin: 0px;
 .table-alert-box tr td { border-collapse: collapse; width: 50%; padding: 10px 20px; line-height: 30px;       font-family: "open_sansbold";  margin: 0px;
 	color: #555;
 	vertical-align: top;
-	font-size: 14px;}
+	font-size: 14px;
+	background-color:#fbfbfb ;}
 	
-	.table-alert-box tr td  span{color: #000;}
+	.table-alert-box tr td  span{color: #000; padding-left: 10px;}
 
-	.table-alert-box tr td:first-child{ border-right:solid #ddd 1px; background-color:#fbfbfb ;}
+	.table-alert-box tr td:first-child{ border-right:solid #ddd 1px;}
 
 
 
