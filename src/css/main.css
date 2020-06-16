@@ -1242,9 +1242,14 @@ h2.heading-text{margin: 0px;
 	float: left;
 }
 
+.table-outer{ height: 250px; overflow-y: auto; float: left; border:solid 1px #ddd;}
+
+.popup-patient-alert-width .popup-header{       padding: 8px 16px 5px;}
+.popup-patient-alert-width .popup-header .close-btn {    position: absolute;    color: #fff;    right: 0px;    top: 0px;}
+
 .table-alert-box.border{ border-radius: 10px; border: solid 1px #ddd; padding: 0px 0px; margin: 0px;  border-collapse: collapse;}
 
-.table-alert-box tr td { border-collapse: collapse; width: 50%; padding: 0px 20px;       font-family: "open_sansbold";  margin: 0px;
+.table-alert-box tr td { border-collapse: collapse; width: 50%; padding: 0px 20px; line-height: 30px;       font-family: "open_sansbold";  margin: 0px;
 	color: #555;
 	vertical-align: top;
 	font-size: 14px;}
