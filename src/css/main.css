@@ -1239,13 +1239,13 @@ h2.heading-text{margin: 0px;
     color: #555;
 	font-size: 18px;
 	float: left;
-	background-color: darkorchid;
+	background-color: #99b0b7;
 	color:#fff;
 	padding: 0 0px 0px 20px;
 	width: calc(50% - 28px);
 }
 
-h2.heading-text.heading-2{ padding-right: 20px; background-color: #3f94d0; width: calc(50% - 32px);}
+h2.heading-text.heading-2{ padding-right: 20px; background-color: #99b0b7; width: calc(50% - 32px);}
 
 .table-outer{ height: 250px; overflow-y: auto; float: left; border:solid 1px #ddd;}
 
@@ -1255,7 +1255,7 @@ h2.heading-text.heading-2{ padding-right: 20px; background-color: #3f94d0; width
 
 .table-alert-box.border{ border-radius: 10px; padding: 0px 0px; margin: 0px;  border-collapse: collapse;}
 
-.table-alert-box tr td { border-collapse: collapse; width: 50%; padding: 10px 20px; line-height: 30px;       font-family: "open_sansbold";  margin: 0px;
+.table-alert-box tr td { border-collapse: collapse; width: 50%; padding: 0px 20px; line-height: 30px;       font-family: "open_sansbold";  margin: 0px;
 	color: #555;
 	vertical-align: top;
 	font-size: 14px;
@@ -1355,6 +1355,9 @@ h2.heading-text.heading-2{ padding-right: 20px; background-color: #3f94d0; width
 .search-custom-bar-transitional{
 	right: 22px !important;
 	top: 125px !important;
+}
+.button-height{
+	line-height: 0.75 !important;
 }
 @media only screen and (max-width: 1024px) {
 	.incart-panel-height{
@@ -1539,6 +1542,9 @@ h2.heading-text.heading-2{ padding-right: 20px; background-color: #3f94d0; width
 	} */
 	.order-width-transitional{
 		width: 201px;
+	}
+	.back_button{
+		left: 3px;
 	}
 
 }

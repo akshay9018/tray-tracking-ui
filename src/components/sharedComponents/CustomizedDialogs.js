@@ -108,15 +108,15 @@ export default class CustomizedDialogs extends Component {
                         <h3>{this.props.dialogContent}</h3>}
                         {this.props.showButtons &&
                             <div className="popup-button" >
-                                <Button variant="contained" color="primary" className="cart-departed active"
+                                <Button variant="contained" color="primary" className="cart-departed active button-height"
                                     onClick={this.onAccept}
                                 >{this.props.acceptBtn}</Button>
 
-                                <Button variant="contained" color="primary" className="cart-departed active"
+                                <Button variant="contained" color="primary" className="cart-departed active button-height"
                                     onClick={this.props.actionOnReject ? this.onReject : this.handleClose}
                                 >{this.props.rejectBtn} </Button>
 
-                                <Button variant="contained" color="primary" className="cart-departed active"
+                                <Button variant="contained" color="primary" className="cart-departed active button-height"
                                     onClick={this.onOptionThree}
                                     style={{display: this.props.displayOptionThree ? 'initial' : 'none'}}
                                 >{this.props.optionThree} </Button>
