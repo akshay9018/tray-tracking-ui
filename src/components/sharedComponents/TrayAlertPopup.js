@@ -2,6 +2,7 @@ import React from "react";
 import { ALERT_LABEL, PROCEED_WITH_TRAY_LABEL, SEND_TO_HOLD_LABEL, NOT_EATEN_LABEL } from "../../redux/actions/Constants";
 import CustomizedDialogs from "./CustomizedDialogs";
 import PatientProfileChangePopup from "./PatientProfileChangePopup";
+import Popup from './Popup';  
 
 const TrayAlertPopup = (props) => {
   var dialogContent = "";
@@ -30,7 +31,10 @@ const TrayAlertPopup = (props) => {
     displayOptionThree = true;
     customClassName = "popup-patient-alert-width"
   }
-
+if(props.infoPop){
+  dialogContent = 
+    <Popup />
+}
   return (
     <CustomizedDialogs dialogTitle={ALERT_LABEL}
       dialogContent={dialogContent}
