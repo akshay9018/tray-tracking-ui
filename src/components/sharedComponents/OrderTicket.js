@@ -4,7 +4,7 @@ import { RUSH, NOW } from "../../redux/actions/Constants";
 const OrderTicket = (props) => {
   return(
     <div id={props.mealOrder.id} onClick={() => props.handleClick ? props.handleClick(props.mealOrder, props.isUndoEnable): undefined}
-      className={props.active && !props.mealOrder.trayAlert? 'order-detail-list active ': 'order-detail-list  red' }>
+      className={props.active && !props.mealOrder.trayAlert? 'order-detail-list active ': 'order-detail-list ' }>
         {
                     props.isUndoEnable ? 
                     <div className="tray-delivered">
