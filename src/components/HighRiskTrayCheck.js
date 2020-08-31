@@ -89,6 +89,13 @@ render() {
           this.props.readyToHighRiskTrayCheckCarts && this.props.readyToHighRiskTrayCheckCarts.length > 0 ?
             <span className="cart-box">
               <h4>Tap cart to view meal orders for High Risk Tray Check</h4>
+
+              <div>
+              
+
+
+
+              </div>
               {this.props.loading ? null : <CustomCart carts={this.props.readyToHighRiskTrayCheckCarts} openSummary={this.openHighRiskTrayCheckSummary} />}
             </span>
             :

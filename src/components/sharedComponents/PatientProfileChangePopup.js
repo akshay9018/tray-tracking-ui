@@ -5,37 +5,49 @@ const PatientProfileChangePopup = (props) => {
     <div className="content" >
       <p> Changes were made to patient profile for ticket #{props.ticketNumber}. Please review the changes for this patient.</p>
       
-      <div  className="patient-details-50">
-      <h2> Previous Patient Details</h2>
-        <div className="border pull-left">
-     <h2 style={{'padding-left':'10px'}}> Diet: <span>{props.oldDetails.diet}</span></h2>  
-          <ul>
-            <li>Allergies: <span>{props.oldDetails.allergies}</span></li>
-            <li>Supplements: <span>{props.oldDetails.supplements}</span></li>
-            <li>Tube Feeding: <span>{props.oldDetails.tubeFeeding}</span></li>
-            <li>Patient Notes:</li>
-            <li style={{'padding-left':'10px'}}>Special Instructions: <span>{props.oldDetails.instructions}</span></li>
-            <li style={{'padding-left':'10px'}}>Preferences: <span>{props.oldDetails.preferences}</span></li>
-            </ul>
-          </div> </div>
-      <div  className="patient-details-50">
-      <h2>Current Patient Details</h2>
-      <div className="border pull-right">
-      <h2 style={{'padding-left':'10px'}}>  Diet: <span>{props.newDetails.diet}</span></h2>  
-      <ul>
-            <li>Allergies: <span>{props.newDetails.allergies}</span></li>
-            <li>Supplements: <span>{props.newDetails.supplements}</span></li>
-            <li>Tube Feeding: <span>{props.newDetails.tubeFeeding}</span></li>
-            <li>Patient Notes:</li>
-            <li style={{'padding-left':'10px'}}>Special Instructions: <span>{props.newDetails.instructions}</span></li>
-            <li style={{'padding-left':'10px'}}>Preferences: <span>{props.newDetails.preferences}</span></li>
-            </ul>
-       </div> 
-       </div>
-      </div>
+      <h2 className="heading-text"> Previous Patient Details</h2>
+      <h2 className="heading-text heading-2">Current Patient Details</h2>
+       <div className="table-outer">
+        <table className="table-alert-box border">
+        	<tr>
+        	 	<td>Diet:  <span> {props.oldDetails.diet}</span> </td>
+        	 	<td>Diet:  <span> {props.newDetails.diet}</span> </td>
+            </tr>
+            <tr>
+       	 		<td>Allergies:  <span>{putEmptyStringIfEmpty(props.oldDetails.allergies)}</span> </td>
+       	 		<td>Allergies:  <span>{putEmptyStringIfEmpty(props.newDetails.allergies)}</span> </td>
+            </tr>
+            <tr>
+   	 			<td>Supplements:  <span>{putEmptyStringIfEmpty(props.oldDetails.supplements)}</span> </td>
+   	 			<td>Supplements:  <span>{putEmptyStringIfEmpty(props.newDetails.supplements)}</span> </td>
+   	 		</tr>
+   	 		<tr>
+   	 			<td>Tube Feeding:  <span>{putEmptyStringIfEmpty(props.oldDetails.tubeFeedings)}</span> </td>
+   	 			<td>Tube Feeding:  <span>{putEmptyStringIfEmpty(props.newDetails.tubeFeedings)}</span> </td>
+			</tr>
+			<tr>
+	 			<td>Patient Notes:  <span>{putEmptyStringIfEmpty(props.oldDetails.notes)}</span> </td>
+	 			<td>Patient Notes:  <span>{putEmptyStringIfEmpty(props.newDetails.notes)}</span> </td>
+	 		</tr>
+	 		<tr>
+ 				<td>Special Instructions:  <span>{putEmptyStringIfEmpty(props.oldDetails.instructions)}</span> </td>
+ 				<td>Special Instructions:  <span>{putEmptyStringIfEmpty(props.newDetails.instructions)}</span> </td>
+ 			</tr>
+ 			<tr>
+				<td>Preferences:  <span>{putEmptyStringIfEmpty(props.oldDetails.preferences)}</span> </td>
+				<td>Preferences:  <span>{putEmptyStringIfEmpty(props.newDetails.preferences)}</span> </td>
+			</tr>
+			</table>
+          </div> 
+        </div>
  
   );
 }
 PatientProfileChangePopup.defaultProps = {
 };
+
+function putEmptyStringIfEmpty(detailString){
+  return detailString && detailString.trim() !== '' ?
+      detailString : '--';
+}
 export default PatientProfileChangePopup;

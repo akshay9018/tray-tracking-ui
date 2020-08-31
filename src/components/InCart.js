@@ -28,7 +28,8 @@ class InCart extends Component {
       isInCart: this.props.screenName === INCART_SCREEN_NAME,
       enableLoader: true,
       search:'',
-      showClear: false
+      showClear: false,
+      showPopup: false
     }
     this.returnSelectedOrder = this.returnSelectedOrder.bind(this);
     this.returnSelectedCart = this.returnSelectedCart.bind(this);
@@ -56,6 +57,11 @@ class InCart extends Component {
   handleClose() {
         this.props.handleClose()
     };
+    togglePopup() {  
+      this.setState({  
+           showPopup: !this.state.showPopup  
+      });  
+       }
   componentWillMount() {
     if (this.state.isInCart){
       this.props.fetchCarts()
@@ -233,8 +239,15 @@ class InCart extends Component {
         </div>
         <div style={{ marginLeft: '-10px', paddingTop: '-18px', marginTop: '-11px', }}  className="width-auto">
         <div className="heading-outer-style display-none zone-cart">
-            <h6 >Meal Orders</h6>
-          </div>
+            <h6 >Meal Orders</h6><button onClick={this.togglePopup.bind(this)}> <img alt="cart info...." src={require("../images/info.png")}/></button>  
+            {this.state.showPopup ?  
+<TrayAlertPopup  
+         open={this.state.showPopup}
+         handleClose={this.togglePopup.bind(this)}  
+         infoPop={true}
+/>  
+: null  
+}  </div>
         <div className="refresh-button" onClick={this.onClickRefresh}><div className="refresh-button-image">{this.state.showRefreshLoading ? <img alt="" width='30px' src={require("../images/refresh-animation.svg")} /> : <img alt="" width='30px' src={require("../images/refresh-btn.png")} />}</div>
             <div className="refresh-button-text">{LOAD_NEW_TRAYS}</div>
           </div>

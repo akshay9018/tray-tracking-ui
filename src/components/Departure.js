@@ -7,6 +7,7 @@ import FiltersComponent from "./sharedComponents/FiltersComponent";
 import { DEPARTED, NO_CART_AVAILABLE, SERVICE_STYLE, SHOW_ALL_SERVICE_STYLES,
   SHOW_ALL_BUILD_AREAS, BUILD_AREA, SEARCH, NUMBER, SEARCH_LABEL_TRAY_NUMBERS } from '../redux/actions/Constants'
 import CustomSearchBar from "./sharedComponents/CustomSearchBar";
+import Popup from './sharedComponents/Popup';  
 
 class Departure extends Component {
   
@@ -16,14 +17,19 @@ class Departure extends Component {
       selectedKitchenId: '-1',
       selectedServiceStyle: '-1',
       search:'',
-      showClear: false
+      showClear: false,
+      showPopup: false
     }
     this.openDepartedSummary = this.openDepartedSummary.bind(this);
     this.closeDepartedSummary = this.closeDepartedSummary.bind(this);
     this.onChange = this.onChange.bind(this);
     this.clearSearch = this.clearSearch.bind(this)
   }
-
+  togglePopup() {  
+    this.setState({  
+         showPopup: !this.state.showPopup  
+    });  
+     }  
   componentWillMount() {
     this.props.fetchReadyToDepartCarts();
     this.props.fetchAllServiceStylesAndKitchens();
@@ -93,7 +99,15 @@ render() {
       {
         this.props.readyToDepartCarts && this.props.readyToDepartCarts.length > 0 ? 
         <span className="cart-box">
-          <h4>Tap cart to view meal orders to mark as Departed</h4>
+          <h4>Tap cart to view meal orders to mark as Departed<button onClick={this.togglePopup.bind(this)}> <img alt="cart info...." src={require("../images/info.png")}/></button>  
+
+{this.state.showPopup ?  
+<Popup  
+          text='Click "Close Button" to hide popup'  
+          closePopup={this.togglePopup.bind(this)}  
+/>  
+: null  
+}  </h4>
       {this.props.loading ? null : <CustomCart carts= {this.props.readyToDepartCarts} openSummary = {this.openDepartedSummary}/>} 
         </span>
         :
