@@ -28,6 +28,7 @@ const OrderTicket = (props) => {
         {props.showDeliveryTime ? props.mealOrder.deliveryTime 
         : props.mealOrder.timeFromDelivery +' min'}
         <span className="rush_indicator">{props.mealOrder.rushOrder && RUSH}</span>
+        <span className="center-align" > <img src="icon-yellow.png"></img>  </span>
         <span className="rush_indicator">{props.mealOrder.nowTray && NOW}</span>
         </div>
       </div> : null }

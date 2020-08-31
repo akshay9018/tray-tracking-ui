@@ -251,6 +251,10 @@ class InCart extends Component {
         <div className="refresh-button" onClick={this.onClickRefresh}><div className="refresh-button-image">{this.state.showRefreshLoading ? <img alt="" width='30px' src={require("../images/refresh-animation.svg")} /> : <img alt="" width='30px' src={require("../images/refresh-btn.png")} />}</div>
             <div className="refresh-button-text">{LOAD_NEW_TRAYS}</div>
           </div>
+          <div className="refresh-button"  onClick={this.onClickRefresh}><div className="refresh-button-image">{this.state.showRefreshLoading ? <img alt="" width='30px' src={require("../images/refresh-animation.svg")} /> : <img alt="" width='30px' src={require("../images/refresh-btn.png")} />}</div>
+            <div className="refresh-button-text">{LOAD_NEW_TRAYS}</div>
+          </div>
+
           <div className={this.state.isInCart ? "incart-panel-height outer-style position-initial" : "outer-style  position-initial"}>
             <div className={this.state.isInCart ? "incart-panel-height scroll" : "scroll"}>
               {(this.state.enableLoader && this.props.loadingIncart) || this.state.showRefreshLoading ?
@@ -261,6 +265,7 @@ class InCart extends Component {
                   mealOrders={this.props.outOfCartOrders}
                   selectedMealOrder={this.props.selectedMealOrder}
                 />}
+              
               {(this.state.enableLoader && this.props.loadingIncart) || this.state.showRefreshLoading ?
                 null :
                 <div>
