@@ -182,7 +182,7 @@ class TransitionalTrays extends Component {
                                 onClick={this.removeTray}>Remove Tray</div>
                             <div className={this.props.selectedCart && this.props.selectedCart.mealOrders && this.props.selectedCart.mealOrders.length > 0 ? "btn-tray" : "btn-tray disabled"}
                                 color="primary"
-                                onClick={this.onAddTrays}>Add Trays</div>
+                                onClick={this.onAddTrays}>High Risk Tray Check</div>
                         </div>
                     </div>
                 </div>
